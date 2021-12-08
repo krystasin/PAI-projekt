@@ -1,10 +1,24 @@
 <?php
-    require 'Routing.php';
-    $path = trim($_SERVER['REQUEST_URI'], '/');
-    $PATH = PARSE_URL($path, PHP_URL_PATH);
+session_start();
 
-    Routing::get('index', 'DefaultControler');
-    Routing::get('projects', 'DefaultControler');
+
+
+
+
+require 'Routing.php';
+
+    $path = trim($_SERVER['REQUEST_URI'], '/');
+    $path = PARSE_URL($path, PHP_URL_PATH);
+
+    Routing::get('', 'DefaultController');
+    Routing::get('main', 'DefaultController');
+    Routing::get('projects', 'DefaultController');
+    Routing::get('tags', 'DefaultController');
+    Routing::post('login', 'SecurityController');
+    Routing::post('logout', 'SecurityController');
+
+
+
     Routing::run($path);
 
 

@@ -7,23 +7,35 @@
 </head>
 <body>
 
+
 <div class="container">
-<!--
+
+<div class="message">
+        <?php
+            if(isset($messages)){
+                foreach( $messages as $m){
+                    print $m;
+                }
+            }
+        ?>
+    </div>
+
     <div class="logo">
         <img src="../img/logo.png">
     </div>
 
     <div class="login-container">
-        <form>
-            <input name="username" type="text" placeholder="Username">
+
+        <form action="login" method="post" id="login-form">
+            <input name="login" type="text" placeholder="Login">
             <input name="password" type="password" placeholder="Password">
             <button type="submit">LOGIN</button>
 
         </form>
     </div>
--->
 
-    <form action="#" id="login-form">
+<!--
+    <form action="projects/" id="login-form">
         <div class="heading">Login to Everdwell</div>
         <div class="left">
             <label for="email">Email</label>
@@ -35,7 +47,8 @@
         <div class="right">
             <div class="connect">Connect with</div>
             <a href="" class="facebook">
-                <!--       <span class="fontawesome-facebook"></span> -->
+
+                      <span class="fontawesome-facebook"></span> -->
                 <i class="fa fa-facebook" aria-hidden="true"></i>
             </a> <br />
             <a href="" class="twitter">
@@ -50,6 +63,7 @@
     </form>
 
 
+-->
 
 </div>
 

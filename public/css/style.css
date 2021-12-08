@@ -1,4 +1,5 @@
 body{
+    font-size: 20px;
     margin: 0;
     padding: 0;
 }
@@ -6,7 +7,8 @@ body{
 .container{
     width: 100vw;
     height: 100vh;
-    background-color: #4DA250;
+    background-color: #7ee081;
+
     display: flex;
     flex-direction: row;
     justify-content: center;
