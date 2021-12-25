@@ -10,20 +10,6 @@ Class LoginMenager
             header("Location: {$url}/login");
             exit();
         }
-        else{
-            ?>
-            <form action="logout" method="post" id="logout-form">
-                <button type="submit">LOGOUT</button>
-
-            </form>
-<?php
-        }
     }
-
-
-
-
-
-
 
 }

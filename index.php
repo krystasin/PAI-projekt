@@ -12,7 +12,6 @@ require 'Routing.php';
 
     Routing::get('', 'DefaultController');
     Routing::get('main', 'DefaultController');
-    Routing::get('projects', 'DefaultController');
     Routing::get('tags', 'DefaultController');
     Routing::post('login', 'SecurityController');
     Routing::post('logout', 'SecurityController');

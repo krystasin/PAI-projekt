@@ -9,17 +9,22 @@ class DefaultController extends AppController {
         $this->render('login');
     }
 
-    public function projects()    {
-        LoginMenager::redirectIfNotLoggedIn();
-        $this->render('projects');
-    }
 
     public function main()    {
         LoginMenager::redirectIfNotLoggedIn();
+        $this->render('headers/header', ['title' => 'Strona główna']);
+        $this->render('static/navigation');
         $this->render('main');
+        $this->render('static/footer');
     }
+
+
     public function tags()    {
         LoginMenager::redirectIfNotLoggedIn();
+        $this->render('headers/header', ['title' => 'Zarządzaj tagami']);
+
+        $this->render('static/navigation');
         $this->render('tags');
+        $this->render('static/footer');
     }
 }
