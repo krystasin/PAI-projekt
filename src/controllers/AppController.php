@@ -14,6 +14,10 @@ class AppController
     protected function render(string $template = null, array $variables = [])
     {
 
+/*        $headerPath = 'public/views/headers/header.php';
+        $navigationPath = 'public/views/static/navigation.php';
+        $footerPath = 'public/views/static/footer.php';*/
+
         $templatePath = 'public/views/' . $template . '.php';
         $output = 'File not found';
 
@@ -21,7 +25,10 @@ class AppController
             extract($variables);
 
             ob_start();
+/*            include $headerPath;
+            include $navigationPath;*/
             include $templatePath;
+/*            include $footerPath;*/
             $output = ob_get_clean();
         }
         print $output;

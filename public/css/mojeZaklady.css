@@ -1,0 +1,148 @@
+.kupon{
+    font-size: 15px;
+    border: 3px solid black;
+    margin: 20px 0 20px 0;
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+
+}
+.kupon-header, .kupon-bottom  {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+
+
+.kupon-bottom {
+    margin: 6px 0 3px 5px;
+}
+
+
+
+.zaklad{
+    border-bottom: 1px solid #aaa;
+    display: flex;
+    flex-direction: row;
+}
+.kupon-column{
+    margin: 4px;
+}
+.zaklad-pozycja{
+    padding-right: 10px;
+}
+.wygrany{
+    color: limegreen;
+}
+.przegrany{
+    color: red;
+}
+.nierozstrzygnięty{
+    color: gray;
+}
+.col1{
+    width: 250px;
+}
+.col2{
+    width: 150px;
+}
+.druzyny{
+}
+.bet{
+    font-size: 14px;
+    color: #333;
+}
+    /*przycisk*/
+    /*przycisk*/
+    /*przycisk*/
+.dodajNowyZaklad{
+    /*display: none;*/
+}
+
+
+.noway-zaklad-all{
+    display: flex;
+    flex-direction: row;
+}
+.nowy-zaklad-template{
+    display: flex;
+    flex-direction: row;
+}
+
+.nowy-zaklad-template-formularz {
+    display: flex;
+    flex-direction: row;
+
+}
+.nowy-zaklad-collumn{
+    border-bottom: 1px solid;
+    display: flex;
+    flex-direction: column;
+    padding: 0 14px 3px 0;
+}
+.nowy-zaklad-form{
+    display: block;
+
+
+}
+.nowy-zaklad-form input{
+    height: 20px;width: 168px;
+
+ }
+
+
+
+
+
+
+
+.dodajNowyZakladPrzycisk:hover, .dodaj-kolejny-zaklad-przycisk:hover, .usun-zaklad-przycisk:hover{
+    cursor: grab;
+}
+.dodajNowyZakladPrzycisk{
+    border: 1px solid #ccc;
+    font-size: 30px;
+    margin: 12px 0 0 0px;
+}
+.dodajNowyZakladPrzycisk .text{
+    font-size: 30px;
+}
+.dodaj-kolejny-zaklad-przycisk{
+
+    font-size: 30px;
+    margin: 10px 0 0 0;
+}
+.usun-zaklad-przycisk{
+    margin: 20px 0 0 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

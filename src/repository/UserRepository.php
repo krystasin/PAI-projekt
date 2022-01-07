@@ -1,10 +1,10 @@
 <?php
 
-require_once 'Repository.php';
+require_once 'DataRepository.php';
 
 require_once __DIR__ . '/../models/User.php';
 
-class UserRepository extends Repository
+class UserRepository extends DataRepository
 {
     private function getUserData( $con, int $id) :?User{
         // natural join public.accountTypes aT on uD.accountTypeId = aT.id

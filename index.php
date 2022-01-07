@@ -11,8 +11,14 @@ require 'Routing.php';
     $path = PARSE_URL($path, PHP_URL_PATH);
 
     Routing::get('', 'DefaultController');
-    Routing::get('main', 'DefaultController');
-    Routing::get('tags', 'DefaultController');
+    Routing::get('mojeZaklady', 'DefaultController');
+    Routing::get('mojeTagi', 'DefaultController');
+    Routing::get('register', 'DefaultController');
+    Routing::get('statystyki', 'DefaultController');
+
+    Routing::post('dodajZaklad', 'DbController');
+
+
     Routing::post('login', 'SecurityController');
     Routing::post('logout', 'SecurityController');
 
@@ -20,4 +26,6 @@ require 'Routing.php';
 
     Routing::run($path);
 
+
+require_once __DIR__ . '/public/views/static/footer.php';
 
