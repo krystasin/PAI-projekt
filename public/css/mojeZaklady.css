@@ -73,15 +73,17 @@
 }
 
 .nowy-zaklad-template-formularz {
+    margin: 10px 0 0 0px;
     display: flex;
     flex-direction: row;
 
 }
 .nowy-zaklad-collumn{
     border-bottom: 1px solid;
+
     display: flex;
     flex-direction: column;
-    padding: 0 14px 3px 0;
+    padding: 0 14px 3px 3px;
 }
 .nowy-zaklad-form{
     display: block;
@@ -96,7 +98,10 @@
 
 
 
-
+.nowy-zaklad-form-podwojny-select{
+    display: flex;
+    flex-direction: column;
+}
 
 
 .dodajNowyZakladPrzycisk:hover, .dodaj-kolejny-zaklad-przycisk:hover, .usun-zaklad-przycisk:hover{
@@ -111,12 +116,13 @@
     font-size: 30px;
 }
 .dodaj-kolejny-zaklad-przycisk{
-
+    width: 30px;
     font-size: 30px;
     margin: 10px 0 0 0;
+
 }
 .usun-zaklad-przycisk{
-    margin: 20px 0 0 5px;
+    margin: 29px 0 0 5px;
 }
 
 

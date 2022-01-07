@@ -17,17 +17,10 @@ class DataRepository
     }
 
 
-
-
-
-
-
-
-    public function getAllKupons(string $username)
+    public function getAllKupons(string $username) : array
     {
         $con = $this->database->setConnection();
-        $stmt = $con->prepare("
-        SELECT 
+        $stmt = $con->prepare("SELECT 
                k.kupon_id, 
                k.data_obstawienia,
                k.stawka,
@@ -51,18 +44,58 @@ class DataRepository
             JOIN _status s_z on z.status_id = s_z.status_id
             JOIN _status s_k on k.status_id = s_k.status_id
         WHERE u.username LIKE :username
-        ORDER BY k.kupon_id, z.zaklad_id
-        ");
-
+        ORDER BY k.kupon_id, z.zaklad_id");
         $stmt->bindParam(':username', $username, PDO::PARAM_STR);
         $stmt->execute();
 
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
         $kupony = $this->stworzListeKuponow($result);
         return $this->dodajZakladyDoKuponow($result, $kupony);
+    }
+
+    public function getMetaData(){
+        $metaData = [];
+        $con = $this->database->setConnection();
+
+        $stmt = $con->prepare("SELECT 
+               m.*,
+               d1.druzyna_nazwa AS gospodarz,
+               d2.druzyna_nazwa AS gosc 
+        FROM mecze m 
+            JOIN druzyny d1 ON m.druzyna_1_id = d1.druzyna_id 
+            JOIN druzyny d2 ON m.druzyna_2_id = d2.druzyna_id");
+        $stmt->execute();
+        $metaData['mecze'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $stmt = $con->prepare("SELECT * FROM _zaklady_rodzaje");
+        $stmt->execute();
+        $metaData['rodzaj_zakladu'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $stmt = $con->prepare("SELECT * FROM _zaklady_wartosci");
+        $stmt->execute();
+        $metaData['wartosc_zakladu'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $stmt = $con->prepare("SELECT * FROM _status");
+        $stmt->execute();
+        $metaData['status'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $metaData;
+    }
+
+    public function dodajZaklad($arr){
+        $con = $this->database->setConnection();
+        $stmt = $con->prepare("SELECT ");
+
+
+
+
 
     }
+
+
+
+
+
 
     private function dodajZakladyDoKuponow($result, $kupony) : ? array
     {
@@ -85,8 +118,6 @@ class DataRepository
 
         return $kupony;
     }
-
-
     private function stworzListeKuponow($result) : ? array
     {
         $kupony = [];
@@ -100,5 +131,10 @@ class DataRepository
 
         return $kupony;
     }
+
+
+
+
+
 }
 

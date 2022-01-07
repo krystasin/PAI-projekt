@@ -17,6 +17,7 @@ require 'Routing.php';
     Routing::get('statystyki', 'DefaultController');
 
     Routing::post('dodajZaklad', 'DbController');
+    Routing::post('test', 'DbController');
 
 
     Routing::post('login', 'SecurityController');

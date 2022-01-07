@@ -18,7 +18,8 @@ class DefaultController extends AppController {
         LoginMenager::redirectIfNotLoggedIn();
         $datarepo = new DataRepository();
         $kupony = $datarepo->getAllKupons($_SESSION['user']);
-        $this->render('mojeZaklady',['title' => 'Strona główna', 'kupony' => $kupony]);
+        $metaData = $datarepo->getMetaData();
+        $this->render('mojeZaklady',['title' => 'Strona główna', 'kupony' => $kupony, 'metaData' => $metaData]);
 
     }
 

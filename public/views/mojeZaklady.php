@@ -4,26 +4,52 @@ require_once __DIR__ . '/static/navigation.php';
 ?>
 <script type="text/javascript" src="/public/assets/js/mojeZaklady.js" defer></script>
 
-<content>
+
+<?php
+if (isset($metaData)) { ?>
+
+
     <div class="nowy-zaklad-template" style="display: none !important;">
         <div class="nowy-zaklad-template-formularz">
             <div class="nowy-zaklad-collumn">
-                <label for="mecz[arrayNumer]" class="label-mecz">mecz</label>
-                <input type="text" name="mecz[arrayNumer]" class="input-mecz">
-                <label for="rodzajZakladu[arrayNumer]">rodzaj zakladu</label>
-                <input type="text" name="rodzajZakladu[arrayNumer]">
+                <label class="label-mecz">mecz</label>
+                <select name="mecz[arrayNumer]" class="input-mecz">
+                    <?php foreach ($metaData['mecze'] as $m) { ?>
+                        <option value="<?= $m['mecz_id'] ?>">  <?= $m['gospodarz'] . " - " . $m['gosc'] . "&nbsp;&nbsp;&nbsp;" . $m['data_meczu'] ?> </option>  <?php } ?>
+                </select>
+                <div>
+                    <div class="nowy-zaklad-form-podwojny-select">
+
+                        <label>rodzaj zakladu</label>
+                        <select name="rodzajZakladu[arrayNumer]" class="rodzaj-zaklad-select">
+                            <?php foreach ($metaData['rodzaj_zakladu'] as $m) { ?>
+                                <option value="<?= $m['zaklad_rodzaj_id'] ?>"><?= $m['rodzaj_zakladu'] ?></option>  <?php } ?>
+                        </select>
+                    </div>
+                    <div class="nowy-zaklad-form-podwojny-select">
+
+                        <label>wartosc zakladu</label>
+                        <select name="wartoscZakladu[arrayNumer]" class="wartosc-zaklad-select">
+                            <?php foreach ($metaData['wartosc_zakladu'] as $m) { ?>
+                                <option value="<?= $m['zaklad_wartosc_id']."_".$m['zaklad_rodzaj_id'] ?>"><?= $m['wartosc_zakladu'] ?></option>  <?php } ?>
+                        </select>
+                    </div>
+
+
+                </div>
             </div>
             <div class="nowy-zaklad-collumn">
-                <label for="data[arrayNumer]">data</label>
-                <input type="date" name="data[arrayNumer]">
-                <label for="wartoscZakladu[arrayNumer]">wartosc zakladu</label>
-                <input type="text" name="wartoscZakladu[arrayNumer]">
+
+
             </div>
             <div class="nowy-zaklad-collumn" style="padding-right: 0px ;">
-                <label for="kurs[arrayNumer]">kurs</label>
-                <input type="number" name="kurs[arrayNumer]" step="0.01">
-                <label for="status[arrayNumer]">status</label>
-                <input type="text" name="status[arrayNumer]">
+                <label>kurs</label>
+                <input type="number" name="kurs[arrayNumer]" step="0.01" value="1.00" class="nowy-zaklad-input-number">
+                <label>status</label>
+                <select name="status[arrayNumer]" class="input-status">
+                    <?php foreach ($metaData['status'] as $m) { ?>
+                        <option value="<?= $m['status_id'] ?>"><?= $m['status'] ?></option>  <?php } ?>
+                </select>
             </div>
         </div>
         <div class="formularz-usun-przycisk">
@@ -31,27 +57,28 @@ require_once __DIR__ . '/static/navigation.php';
         </div>
     </div>
 
+    <?php
+}
+?>
+
+
+<content>
+
     <div class="standard-content">
-
-        <div class="aaa">
-
-        </div>
-
 
         <div class="sidebar">
             MAIIN-sidebar-container
-
         </div>
 
 
         <div class="content-right">
 
+
             <div class="noway-zaklad-all">
 
                 <div class="dodajNowyZaklad">
-                    <form action="dodajZaklad" class="nowy-zaklad-form" method="post">
-                        <button type="submit" class="nowy-zaklad-button" style="display: none;">dodaj zakład</button>
-
+                    <form  class="nowy-zaklad-form" method="post">
+                        <button type="button" class="nowy-zaklad-button" style="display: none;">dodaj zakład</button>
                     </form>
                     <i class="fas fa-plus-square dodaj-kolejny-zaklad-przycisk" style="display: none;"></i>
                 </div>
@@ -63,9 +90,8 @@ require_once __DIR__ . '/static/navigation.php';
                 </div>
             </div>
 
-            <?php
 
-
+            <?php //wypiszanie wszystkich kuponów
             if (isset($kupony)) {
 
                 $last = $kupony[0]->id;
@@ -81,8 +107,7 @@ require_once __DIR__ . '/static/navigation.php';
                         </div>
 
                         <?php
-                        foreach ($kupon->zaklady as $z)
-                        {
+                        foreach ($kupon->zaklady as $z) {
                             ?>
                             <div class="zaklad">
                                 <div class="kupon-column col1">
@@ -108,14 +133,12 @@ require_once __DIR__ . '/static/navigation.php';
                 }
             }
             ?>
+
+
         </div>  <!--</content-right-->
 
 
     </div>  <!-- </div> standard-content -->
-
-
-
-
 
 
 </content>
