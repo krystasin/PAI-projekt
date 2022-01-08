@@ -17,7 +17,7 @@ class DataRepository
     }
 
 
-    public function getAllKupons(string $username) : array
+    public function getAllKupons(string $username): array
     {
         $con = $this->database->setConnection();
         $stmt = $con->prepare("SELECT 
@@ -53,7 +53,8 @@ class DataRepository
         return $this->dodajZakladyDoKuponow($result, $kupony);
     }
 
-    public function getMetaData(){
+    public function getMetaData()
+    {
         $metaData = [];
         $con = $this->database->setConnection();
 
@@ -82,25 +83,72 @@ class DataRepository
         return $metaData;
     }
 
-    public function dodajZaklad($arr){
+    public function dodajZaklad($data, $user)
+    {
         $con = $this->database->setConnection();
-        $stmt = $con->prepare("SELECT ");
+        $status = 1;
+        foreach ($data as $z)
+            if ($z['status'] == 0) {
+                $status = 0;
+                break;
+            }
+        foreach ($data as $z)
+            if ($z['status'] == -1) {
+                $status = -1;
+                break;
+            }
 
+        $stmt = $con->prepare(
+            "INSERT into kupony (user_id, status_id, data_obstawienia)
+            values 
+            ((SELECT id from usersdata where username like :user ), :status ,NOW())
+            RETURNING kupon_id"
+        );
+        $stmt->bindValue(':user', $user, PDO::PARAM_STR);
+        $stmt->bindValue(':status', $status, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
+/*        $stmt = $con->prepare("insert into test values (:kuponID, 222,333)");
+        $stmt->bindValue(':kuponID', $result['kupon_id'], PDO::PARAM_INT);
+        $stmt->execute();
+        $result2 = $stmt->fetch(PDO::FETCH_ASSOC);*/
 
+        $nowyKupon = [];
+        foreach ($data as $z) {
 
+            $stmt = $con->prepare("INSERT INTO
+            zaklady (zaklad_id, kupon_id, mecz_id, zaklad_rodzaj_id, zaklad_wartosc_id, status_id, kurs)
+            VALUES (
+                    nextval('zaklad_zaklad_id_seq'), 
+                    :kuponId, 
+                    :mecz_id, 
+                    :zaklad_rodzaj_id, 
+                    :zaklad_wartosc_id, 
+                    :status_id, 
+                    :kurs)
+            RETURNING *;
+                    ");
+            $stmt->bindValue(':kuponId', $result['kupon_id'], PDO::PARAM_INT);
+            $stmt->bindValue(':mecz_id', $z['mecz'], PDO::PARAM_INT);
+            $stmt->bindValue(':zaklad_rodzaj_id', $z['zaklad_r'], PDO::PARAM_INT);
+            $stmt->bindValue(':zaklad_wartosc_id', explode('_',$z['zaklad_w'])[0], PDO::PARAM_INT);
+            $stmt->bindValue(':status_id', $z['status'], PDO::PARAM_INT);
+            $stmt->bindValue(':kurs', $z['kurs'], PDO::PARAM_STR);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            array_push($nowyKupon, $result);
 
+        }
+
+        return $nowyKupon;
     }
 
 
-
-
-
-
-    private function dodajZakladyDoKuponow($result, $kupony) : ? array
+    private function dodajZakladyDoKuponow($result, $kupony): ?array
     {
 
-        foreach ($result as $r){
+        foreach ($result as $r) {
             $zaklad = new Zaklad(
                 $r['kupon_id'],
                 $r['zaklad_id'],
@@ -118,22 +166,20 @@ class DataRepository
 
         return $kupony;
     }
-    private function stworzListeKuponow($result) : ? array
+
+    private function stworzListeKuponow($result): ?array
     {
         $kupony = [];
         foreach ($result as $r)
-            if( !array_key_exists($r['kupon_id'], $kupony) )
+            if (!array_key_exists($r['kupon_id'], $kupony))
                 $kupony[$r['kupon_id']] = new Kupon(
                     $r['kupon_id'],
                     $r['status_zakladu'],
                     $r['stawka'],
-                    $r['data_obstawienia'] );
+                    $r['data_obstawienia']);
 
         return $kupony;
     }
-
-
-
 
 
 }

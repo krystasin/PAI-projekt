@@ -46,3 +46,4 @@ require_once __DIR__ . '/headers/header.php';
     </div>
 </content>
 
+require_once __DIR__ . '/public/views/static/footer.php';

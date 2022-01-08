@@ -3,8 +3,7 @@ let nrZakladuWForm = 0;
 
 document.querySelector(".dodajNowyZakladPrzycisk").addEventListener("click", function () {
     this.style.display = "none";
-    document.querySelector(".nowy-zaklad-button").style.display = "block";
-    document.querySelector(".dodaj-kolejny-zaklad-przycisk").style.display = "block";
+    tooglePrzyciski(true);
     dodajNowyZakladDoForm();
 })
 
@@ -22,11 +21,11 @@ function dodajNowyZakladDoForm() {
             el.value = "";
         else
             el.value = 1.0;
-
-
     });
+
     x.querySelector(".usun-zaklad-przycisk").addEventListener("click", function () {
         this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode);
+        //todo sprwdzić ile zostało w form => tooglePrzyciski();
     })
 
     x.querySelector(".rodzaj-zaklad-select").addEventListener("change", function () {
@@ -43,11 +42,9 @@ function dodajNowyZakladDoForm() {
             if (opt.value.split("_")[1] != wybrany_zaklad.value) {
                 console.log("hide " + opt.value.split("_")[0] + "+" + opt.value.split("_")[1]);
                 opt.hidden = true;
-                // opt.setAttribute('hiddend');
             } else {
                 console.log("show " + opt.value.split("_")[0] + "+" + opt.value.split("_")[1]);
                 opt.hidden = false;
-                //  opt.removeAttribute('hidden')
 
             }
         }
@@ -58,6 +55,12 @@ function dodajNowyZakladDoForm() {
                     o => if(o.value.split("_")[1] != zaklad_rodzaj)
                 )*/
     })
+
+    x.querySelector(".rodzaj-zaklad-select").addEventListener("o", function () {
+
+    })
+
+
 
 
     document.querySelector(".nowy-zaklad-form").append(x);
@@ -76,17 +79,31 @@ document.addEventListener("DOMContentLoaded", function () {
         const kurs = form.querySelectorAll(".nowy-zaklad-input-number");
         const status = form.querySelectorAll(".input-status");
 
-        let dataToSent = new FormData();
+        let tempDataToSent = [];
         for (var i = 0; i < mecz.length; i++) {
-            dataToSent.append('kurs['+i+']', kurs[i]);
-            dataToSent.append('status['+i+']', status[i]);
-            dataToSent.append('mecz_id['+i+']', mecz[i]);
-            dataToSent.append('zaklad_r['+i+']', zaklad_r[i]);
-            dataToSent.append('zaklad_w['+i+']', zaklad_w[i]);
+            nowyZaklad = {
+                'mecz': mecz[i].value,
+                'zaklad_r': zaklad_r[i].value,
+                'zaklad_w': zaklad_w[i].value,
+                'kurs': kurs[i].value,
+                'status': status[i].value,
+            }
+            console.log(nowyZaklad);
+            tempDataToSent[i] = nowyZaklad;
 
         }
-        fetch('/dodajZaklad', {
-            method: 'POST', body: dataToSent
+        let dataToSent = {
+            'data': tempDataToSent
+        }
+        console.log(dataToSent);
+        dataTo = JSON.stringify(dataToSent);
+        console.log(dataTo);
+        fetch("/dodajZaklad", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: dataTo
         })
             .then(res => res.json())
             .then(res => console.log(res))
@@ -95,7 +112,18 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+function tooglePrzyciski(stan) {
+    if (stan == true) {
+        document.querySelector(".nowy-zaklad-button").style.display = "block";
+        document.querySelector(".dodaj-kolejny-zaklad-przycisk").style.display = "block";
+    }
+    else{
+        document.querySelector(".dodajNowyZakladPrzycisk").style.display = "block";
+        document.querySelector(".nowy-zaklad-button").style.display = "none";
+        document.querySelector(".dodaj-kolejny-zaklad-przycisk").style.display = "none";
+    }
 
+}
 
 
 

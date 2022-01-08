@@ -16,8 +16,8 @@ require 'Routing.php';
     Routing::get('register', 'DefaultController');
     Routing::get('statystyki', 'DefaultController');
 
-    Routing::post('dodajZaklad', 'DbController');
-    Routing::post('test', 'DbController');
+    Routing::post('dodajZaklad', 'DataController');
+
 
 
     Routing::post('login', 'SecurityController');
@@ -28,5 +28,5 @@ require 'Routing.php';
     Routing::run($path);
 
 
-require_once __DIR__ . '/public/views/static/footer.php';
+
 

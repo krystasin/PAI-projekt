@@ -19,3 +19,4 @@ require_once __DIR__ . '/static/navigation.php';
 
 </content>
 
+require_once __DIR__ . '/public/views/static/footer.php';
