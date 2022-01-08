@@ -28,36 +28,52 @@ function dodajNowyZakladDoForm() {
         //todo sprwdzić ile zostało w form => tooglePrzyciski();
     })
 
+
+
     x.querySelector(".rodzaj-zaklad-select").addEventListener("change", function () {
-        const sel = x.querySelector(".rodzaj-zaklad-select");
-        const wybrany_zaklad = sel.options[sel.selectedIndex];
         const sel2 = x.querySelector(".wartosc-zaklad-select");
+        const val = sel2.options;
 
-        console.log("porownianie do: " + wybrany_zaklad.value);
-
-
-        for (var i = 0, len = sel2.options.length; i < len; i++) {
-            opt = sel2.options[i];
-
-            if (opt.value.split("_")[1] != wybrany_zaklad.value) {
-                console.log("hide " + opt.value.split("_")[0] + "+" + opt.value.split("_")[1]);
-                opt.hidden = true;
-            } else {
-                console.log("show " + opt.value.split("_")[0] + "+" + opt.value.split("_")[1]);
-                opt.hidden = false;
-
-            }
-        }
-        console.log("______");
+        sel2.value = "";
+        /*
+                const sel = x.querySelector(".rodzaj-zaklad-select");
+               const wybrany_zaklad = sel.options[sel.selectedIndex];
 
 
-        /*        x.querySelector(".wartosc-zaklad-select").options.forEach(
-                    o => if(o.value.split("_")[1] != zaklad_rodzaj)
-                )*/
+                console.log("porownianie do: " + wybrany_zaklad.value);
+
+
+                for (var i = 0, len = sel2.options.length; i < len; i++) {
+                    opt = sel2.options[i];
+
+                    if (opt.value.split("_")[1] != wybrany_zaklad.value) {
+                        console.log("hide " + opt.value.split("_")[0] + "+" + opt.value.split("_")[1]);
+                        opt.hidden = true;
+                    } else {
+                        console.log("show " + opt.value.split("_")[0] + "+" + opt.value.split("_")[1]);
+                        opt.hidden = false;
+
+                    }
+                }
+                console.log("______");*/
+
     })
 
-    x.querySelector(".rodzaj-zaklad-select").addEventListener("o", function () {
 
+
+    x.querySelector(".wartosc-zaklad-select").addEventListener("focus", function () {
+        this.select
+        const sel = x.querySelector(".rodzaj-zaklad-select");
+        const wybrany_zaklad = sel.options[sel.selectedIndex];
+    //    const sel2 = x.querySelector(".wartosc-zaklad-select");
+        for (var i = 0, len = this.options.length; i < len; i++) {
+            opt = this.options[i];
+            if (opt.value.split("_")[1] != wybrany_zaklad.value)
+                opt.hidden = true;
+            else
+                opt.hidden = false;
+
+        }
     })
 
 
@@ -81,6 +97,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let tempDataToSent = [];
         for (var i = 0; i < mecz.length; i++) {
+            if(zaklad_w[i].value == "")   {
+                console.log("nie wybrano wartosci zakładu => nie wysłano zapytania");
+                return;
+            }
             nowyZaklad = {
                 'mecz': mecz[i].value,
                 'zaklad_r': zaklad_r[i].value,
