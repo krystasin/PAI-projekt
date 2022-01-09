@@ -85,6 +85,30 @@
     flex-direction: column;
     padding: 0 14px 3px 3px;
 }
+/*
+    FORM
+    FORM
+    */
+#form-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.form-header-col{
+    display: flex;
+    flex-direction: row;
+}
+.nowy-zaklad-button-div{
+    margin-right: 25px;
+}
+.input-stawka{
+    margin-left: 10px;
+}
+
+
+
+
+
 .nowy-zaklad-form{
     display: block;
 

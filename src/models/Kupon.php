@@ -2,6 +2,7 @@
 
 
 require_once 'Zaklad.php';
+require_once 'Tag.php';
 
 class Kupon
 {
@@ -29,5 +30,9 @@ class Kupon
     public function dodajZaklad(Zaklad $nowyZaklad){
         array_push($this->zaklady,$nowyZaklad);
         $this->kurs *= $nowyZaklad->kurs;
+    }
+    public function dodajTag(Zaklad $nowyTag){
+        array_push($this->tagi,$nowyTag);
+
     }
 }

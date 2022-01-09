@@ -5,35 +5,49 @@ require_once 'AppController.php';
 require_once __DIR__ . '/../helpers/LoginMenager.php';
 require_once __DIR__ . '/../repository/DataRepository.php';
 
-class DefaultController extends AppController {
+class DefaultController extends AppController
+{
 
-    public function index()    {
+    private $datarepo;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->datarepo = new DataRepository();
+    }
+
+
+    public function index()
+    {
         LoginMenager::redirectIfLoggedIn();
         $this->render('login', ['title' => 'Strona główna']);
     }
 
 
-
-    public function mojeZaklady()    {
+    public function mojeZaklady()
+    {
         LoginMenager::redirectIfNotLoggedIn();
-        $datarepo = new DataRepository();
-        $kupony = $datarepo->getAllKupons($_SESSION['user']);
-        $metaData = $datarepo->getMetaData();
-        $this->render('mojeZaklady',['title' => 'Strona główna', 'kupony' => $kupony, 'metaData' => $metaData]);
+        $kupony = $this->datarepo->getAllKupons($_SESSION['user']);
+        $metaData = $this->datarepo->getMetaData();
+        $this->render('mojeZaklady', ['title' => 'Strona główna', 'kupony' => $kupony, 'metaData' => $metaData]);
 
     }
 
-    public function register()    {
-        $this->render('register',['title' => 'Rejestracja']);
-
-    }
-    public function statystyki()    {
-        $this->render('statystyki',['title' => 'Statystyki']);
+    public function register()
+    {
+        $this->render('register', ['title' => 'Rejestracja']);
 
     }
 
+    public function statystyki()
+    {
+        $this->render('statystyki', ['title' => 'Statystyki']);
 
-    public function mojeTagi()    {
+    }
+
+
+    public function mojeTagi()
+    {
         LoginMenager::redirectIfNotLoggedIn();
         $this->render('mojeTagi', ['title' => 'Zarządzaj tagami']);
 

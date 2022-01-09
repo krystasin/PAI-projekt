@@ -1,5 +1,5 @@
 let nrZakladuWForm = 0;
-
+przyciskiWidzoczne = false;
 
 document.querySelector(".dodajNowyZakladPrzycisk").addEventListener("click", function () {
     this.style.display = "none";
@@ -66,14 +66,10 @@ function dodajNowyZakladDoForm() {
         const sel = x.querySelector(".rodzaj-zaklad-select");
         const wybrany_zaklad = sel.options[sel.selectedIndex];
     //    const sel2 = x.querySelector(".wartosc-zaklad-select");
-        for (var i = 0, len = this.options.length; i < len; i++) {
-            opt = this.options[i];
-            if (opt.value.split("_")[1] != wybrany_zaklad.value)
-                opt.hidden = true;
-            else
-                opt.hidden = false;
-
+        for (var i = 0, len = this.options.length; i < len; i++){
+            this.options[i].hidden = this.options[i].value.split("_")[1] != wybrany_zaklad.value;
         }
+
     })
 
 
@@ -114,6 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         let dataToSent = {
             'data': tempDataToSent
+
         }
         console.log(dataToSent);
         dataTo = JSON.stringify(dataToSent);
@@ -126,16 +123,19 @@ document.addEventListener("DOMContentLoaded", function () {
             body: dataTo
         })
             .then(res => res.json())
-            .then(res => console.log(res))
-
+            .then(function (res){
+                console.log(res);
+                createKupon(res);
+            })
     });
 });
 
-
-function tooglePrzyciski(stan) {
-    if (stan == true) {
+function tooglePrzyciski() {
+    if (!przyciskiWidzoczne) {
         document.querySelector(".nowy-zaklad-button").style.display = "block";
         document.querySelector(".dodaj-kolejny-zaklad-przycisk").style.display = "block";
+        document.querySelector(".input-stawka").style.display = "block";
+        document.querySelector(".label-stawka").style.display = "block";
     }
     else{
         document.querySelector(".dodajNowyZakladPrzycisk").style.display = "block";
@@ -147,7 +147,56 @@ function tooglePrzyciski(stan) {
 
 
 
+function createKupon(data) {
+    console.log("data:");
+    console.log(data);
+    const metadata = data[0];
+    const zaklady = data[1];
 
+    console.log("zaklady");
+    console.log(zaklady);
 
+    const template = document.querySelector("#kupon-template");
+
+    const kupon = template.content.children[0].cloneNode(true);
+    let header = kupon.querySelector(".kupon-header");
+    header.querySelector(".id-kuponu").innerHTML = "#" + zaklady.kupon_id;
+    header.querySelector(".data_meczu").innerHTML = zaklady[0].data_meczu;
+    header.querySelector("span").innerHTML = zaklady[0].status_kuponu;
+    header.querySelector("span").classList.add(zaklady[0].status_kuponu);
+
+    zaklady.forEach(zaklad => {
+        createZaklad(zaklad, kupon);
+    });
+    createBottomTemplate(zaklady[0], kupon )
+
+    console.log("kupon::");
+    console.log(kupon);
+
+    document.querySelector(".wszystkieKupony").innerHTML = kupon.outerHTML + document.querySelector(".wszystkieKupony").innerHTML;
+
+}
+
+function createZaklad(zaklad, kupon) {
+    const template = document.querySelector("#zaklad-template");
+    const zakladDiv = template.content.cloneNode(true);
+
+    zakladDiv.querySelector(".druzyny").innerHTML = zaklad.gospodarz + " - " + zaklad.gość;
+    zakladDiv.querySelector(".bet").innerHTML = zaklad.rodzaj_zakladu + ": " + zaklad.wartosc_zakladu;
+    zakladDiv.querySelector(".dataMeczu").innerHTML = zaklad.data_meczu;
+    zakladDiv.querySelector(".zakladu-kurs").innerHTML = zaklad.kurs;
+    kupon.append(zakladDiv);
+}
+
+function createBottomTemplate(zaklad, kupon){
+    const template = document.querySelector("#kupon-bottom-template");
+    const bottom = template.content.cloneNode(true);
+
+    bottom.querySelector(".stawka").innerHTML = "stawka: "+ zaklad.stawka;
+    bottom.querySelector(".kurs").innerHTML = zaklad.kurs;
+    bottom.querySelector(".pot-wygrana").innerHTML = "$" + zaklad.kurs * zaklad.stawka;
+    console.log(zaklad.stawka);
+    kupon.append(bottom);
+}
 
 
