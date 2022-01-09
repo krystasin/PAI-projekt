@@ -25,14 +25,19 @@ class Kupon
         $this->stawka = $stawka;
         $this->dataObstawienia = new DateTime($data);
         $this->zaklady = [];
+        $this->tagi = [];
     }
 
     public function dodajZaklad(Zaklad $nowyZaklad){
-        array_push($this->zaklady,$nowyZaklad);
+        array_push($this->zaklady, $nowyZaklad);
         $this->kurs *= $nowyZaklad->kurs;
     }
-    public function dodajTag(Zaklad $nowyTag){
-        array_push($this->tagi,$nowyTag);
-
+    public function dodajTag(Tag $nowyTag){
+        array_push($this->tagi, $nowyTag);
     }
+    public function getTags(){
+        return $this->tagi;
+    }
+
+
 }

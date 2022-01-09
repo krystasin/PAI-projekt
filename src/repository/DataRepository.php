@@ -188,7 +188,7 @@ class DataRepository
     }
 
 
-    private function dodajTagiDoKuponow($kupony, $con) : arrray{
+    private function dodajTagiDoKuponow($kupony, $con) : array{
 
         foreach($kupony as $k)
         {
@@ -209,7 +209,7 @@ class DataRepository
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             foreach($result as $tag)
-                $k->dodajTag(new Tag($tag['tag_id'],$tag['nazwa'],$tag['kolor'],$tag['aktywny'], $tag['opis'] ));
+                $k->dodajTag(new Tag($tag['tag_id'],$tag['nazwa'],$tag['kolor'],$tag['aktywny'] ));
         }
         return $kupony;
     }

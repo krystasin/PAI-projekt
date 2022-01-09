@@ -112,6 +112,13 @@ if (isset($metaData)) { ?>
                                 <div class="kupon-header">
                                     <div>#<?= $kupon->id ?></div>
                                     <div><?= $kupon->dataObstawienia->format('Y-m-d H:i'); ?></div>
+                                    <div class="header-tagi">
+                                        <?php
+                                        foreach ($kupon->getTags() as $tag) {   ?>
+                                            <span class="tag" style="background-color: <?=$tag->getKolor()?>"><?=$tag->getNazwa()?></span>
+                               <?php    }                                        
+                                        ?>        
+                                    </div>
                                     <div>status:<span class="<?= $kupon->status ?>"> <?= $kupon->status ?></span></div>
                                 </div>
 
@@ -127,6 +134,7 @@ if (isset($metaData)) { ?>
                                             <div class="zaklad-properties"><?= $z->dataMeczu->format('Y-m-d H:i'); ?></div>
                                             <div class="zaklad-properties">kurs: <?= $z->kurs ?></div>
                                         </div>
+
                                     </div>      <!-- </zaklad -->
                                     <?php
                                 }
