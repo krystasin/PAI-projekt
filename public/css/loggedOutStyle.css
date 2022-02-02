@@ -1,23 +1,38 @@
-.login-content {
-
+.loggedOut-content {
+    padding-top: 200px;
+    background-color:#10915a;
     width: 100vw;
-    min-height: 60vw;
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
     flex: 1 1 auto;
+    background: rgb(2,0,36);
+    background: linear-gradient(16deg,
+    rgba(2,0,36,1) 0%,
+    rgba(6,6,89,1) 0%,
+    rgba(7,7,97,1) 23%,
+    rgba(9,9,121,1) 31%,
+    rgba(0,212,255,1) 100%);
 
 }
-
-
-.loginPage-logo{
-    width: 50%;
-    text-align: center;
-}
+.login-logo{
+     margin: auto;
+     width: 100px;
+     height: 100px;
+     text-align: center;
+ }
 
 .login-right{
-    width: 50%;
+    margin: auto;
+}
+
+
+.login-panel{
+    background-color: white;
+    padding:40px 0 0 0;
+    width: 300px;
+    border: 1px solid #444;
 }
 .login-right form{
     display: flex;
@@ -25,11 +40,77 @@
     justify-content: center;
     align-items: center;
 
-    height: 40vh;
+}
+.login-icon{
+    width: 20px;
+    height: 20px;
+    background-image: url(/src/img/user-solid.svg);
+}
+
+
+.login-row{
+    display: flex;
+    width: 220px;
+    margin: 15px auto 25px auto;
+    border-bottom: 1px solid #666;
+}
+.login-input{
+    margin-left: 24px;
+    padding: 8px 0 1px 0;
+    font-size:larger;
+    border: none;
+}
+.login-input:focus{
+    outline: none;
 }
 .register-href{
+    margin: 0 0 15px 0;
     text-align: center;
+    font-size: 15px;
 }
+
+.login-btn{
+    margin-top: 26px;
+    text-transform: capitalize;
+    color: white;
+    border: none;
+    width: 100%;
+    font-size: larger;
+    padding: 15px;
+}
+.login-btn:hover{
+    cursor: pointer;
+}
+
+
+
+.bg-input{
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    background-position-y: 8px;
+}
+.user-bg{
+    background-image: url(img/user-solid.svg);
+}
+.lock-bg{
+    background-image: url(img/lock-solid.svg);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

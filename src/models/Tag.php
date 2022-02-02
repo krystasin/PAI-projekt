@@ -2,27 +2,27 @@
 
 class Tag
 {
-    private int $id;
-    private string $nazwa;
-    private string $kolor;
-    private string $opis;
-    private array $zastosowanie;
-    private bool $aktywny;
+    public int $id;
+    public string $nazwa;
+    public string $kolor;
+    public string $opis;
+    public int $iloscUzyc;
+    public bool $aktywny;
 
-    public function __construct(int $id, string $nazwa, string $kolor, bool $aktywny, ? string $opis = "", ? array $zastosowanie = [])
+    public function __construct(int $id, string $nazwa, string $kolor, bool $aktywny, ?string $opis = "", ?int $iloscUzyc = 0 )
     {
         $this->id = $id;
         $this->nazwa = $nazwa;
         $this->kolor = $kolor;
         $this->aktywny = $aktywny;
-        if($opis == null)
-            $this->opis = $opis;
-        else
+        $this->iloscUzyc = $iloscUzyc;
+
+        if($opis === null)
             $this->opis = "";
-        if($zastosowanie == null)
-            $this->zastosowanie = $zastosowanie;
         else
-            $this->zastosowanie = "";
+            $this->opis = $opis;
+
+
     }
 
     public function getId(): int
@@ -41,7 +41,6 @@ class Tag
     {
         return $this->kolor;
     }
-
 
 
 }

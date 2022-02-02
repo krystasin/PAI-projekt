@@ -1,10 +1,9 @@
+<footer class="footer-bottom" barbara="stopka">
 
-
-    <footer class="footer-bottom">
-
-        <p>COPY Krystyn Brzyski</p>
-        <p>na potrzeby PAI</p>
-
-    </footer>
-</div>      <!-- </div container>-->
+    <p>&copy Krystyn Brzyski</p>
+    <p>na potrzeby PAI</p>
+</footer>
+</div>
 </body>
+</html>
+

@@ -10,6 +10,10 @@ header{
     justify-content: flex-start;
     background-color:#09814a;
 
+    /*background-color: rgb(77,162,80);*/
+
+    background-color:  rgba(9,50,121,1);
+
 }
 ul{
 
@@ -37,6 +41,7 @@ ul{
 }
 .navLi a{
     padding: 10px 17px;
+    color: white;
 }
 
 

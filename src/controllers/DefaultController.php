@@ -46,10 +46,4 @@ class DefaultController extends AppController
     }
 
 
-    public function mojeTagi()
-    {
-        LoginMenager::redirectIfNotLoggedIn();
-        $this->render('mojeTagi', ['title' => 'Zarządzaj tagami']);
-
-    }
 }

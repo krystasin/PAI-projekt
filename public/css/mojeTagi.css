@@ -1,0 +1,165 @@
+.content-right {
+    padding-left: 10vw;
+}
+
+.tag-calosc {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    width: 450px;
+    padding-bottom: 5px;
+    margin: 30px 0 0 0;
+}
+
+
+.tag-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px solid #555;
+    padding: 5px 5px 2px 5px;
+}
+
+.dodaj-tag-bottom {
+    display: flex;
+    flex-direction: row;
+    color: #333;
+    padding: 5px 5px 2px 5px;
+    min-height: 2em;
+    size: 14px;
+}
+.tag-opis{
+    font-size: 14px;
+}
+
+.tag-col {
+    width: 150px;
+}
+
+
+.tag-aktywny-span {
+    margin-left: 3px;
+}
+
+.nieaktywny-tag {
+    color: #999;
+}
+
+
+.dodaj-tag-kolor-h {
+    display: flex;
+}
+
+.dodaj-tag-picked-color {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #777;
+}
+.tag-color-box{
+    width: 20px;
+    height: 20px;
+}
+
+
+.red {
+    background-color: red;
+}
+
+.green {
+    background-color: green
+}
+
+.blue {
+    background-color: blue
+}
+
+
+/*  DODAJ TAG   */
+/*  DODAJ TAG   */
+/*  DODAJ TAG   */
+
+.tag-colors {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    padding: 5px;
+}
+
+.tag-color-row {
+    padding: 5px;
+    display: flex;
+}
+
+.tag-color-pick {
+    border: 1px solid #777;
+    width: 1em;
+    height: 1em;
+}
+
+
+.input-color-range {
+    margin-left: 6px;
+    width: 120px;
+}
+
+
+.tag-header-form {
+    border-bottom: none;
+}
+
+.dodaj-tag-input-nazwa {
+    width: 150px;
+}
+
+.dodaj-tag-input-kolor {
+    width: 70px;
+    text-align: right;
+    margin-right: 8px;
+
+}
+
+.tag-header input {
+    padding: 0 2px;
+}
+
+.dodaj-tag-input-opis {
+    width: 438px;
+    min-height: 60px;
+    padding: 0 2px;
+}
+
+
+.dodaj-tag-button{
+    width: auto;
+    border: none;
+    padding: 10px 0 2px 0;
+    font-size: 16px;
+    text-transform: capitalize;
+}
+
+.dodaj-tag-input-aktywny {
+    background-color: green;
+}
+
+
+
+
+
+
+
+
+
+.remove-tag:hover{
+    cursor: pointer;
+}
+.remove-tag{
+    margin-left: 6px;
+}
+.bg-icon{
+    background-repeat: no-repeat;
+    height: 20px;
+    width: 20px;
+}
+
+
+

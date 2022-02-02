@@ -1,10 +1,25 @@
 <?php
 require_once __DIR__ . '/headers/header.php';
-require_once __DIR__ . '/static/navigation.php';
 ?>
 
-<content>
+
+<script type='text/javascript' src='/public/assets/js/mojeTagi.js' defer></script>
 
 
-</content>
-require_once __DIR__ . '/public/views/static/footer.php';
+<div class='container'>
+    <?php require_once __DIR__ . '/static/navigation.php'; ?>
+
+    <div class='content standard-content'>
+
+        <div class='sidebar'>
+            sidebar-container
+        </div>
+
+        <div class='content-right'>
+
+
+
+        </div>
+    </div>
+
+    <?php require_once 'static/footer.php'; ?>

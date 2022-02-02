@@ -1,24 +1,19 @@
 <?php
 
 
-require_once __DIR__ . '/../../Database.php';
+require_once 'Repository.php';
 require_once __DIR__ . '/../models/Zaklad.php';
 require_once __DIR__ . '/../models/Kupon.php';
 require_once __DIR__ . '/../models/Tag.php';
 
-class DataRepository
+class DataRepository extends Repository
 {
     //todo zrobic singleton ? ? ?
 
-    protected $database;
-
-    public function __construct()
-    {
-        $this->database = new Database();
-    }
 
 
-    public function getAllKupons(string $username, int $limit = 100): array
+
+    public function getAllKupons(string $username, int $limit = 10): array
     {
         $con = $this->database->setConnection();
         $stmt = $con->prepare("SELECT 
@@ -45,7 +40,7 @@ class DataRepository
             JOIN _status s_z on z.status_id = s_z.status_id
             JOIN _status s_k on k.status_id = s_k.status_id
         WHERE u.username LIKE :username
-        ORDER BY k.kupon_id, z.zaklad_id
+        ORDER BY k.kupon_id DESC, z.zaklad_id
         LIMIT :limit");
         $stmt->bindParam(':username', $username, PDO::PARAM_STR);
         $stmt->bindParam(':limit', $limit, PDO::PARAM_STR);
@@ -58,9 +53,9 @@ class DataRepository
     }
 
 
-
-    private function getKuponWithId($user, $kuponId, $con) : array {
-        if($con == null)
+    private function getKuponWithId($user, $kuponId, $con): array
+    {
+        if ($con == null)
             $con = $this->database->setConnection();
         $stmt = $con->prepare("SELECT 
                k.kupon_id, 
@@ -97,6 +92,7 @@ class DataRepository
 
     public function getMetaData()
     {
+        $user = $_SESSION['user'];
         $metaData = [];
         $con = $this->database->setConnection();
 
@@ -122,42 +118,56 @@ class DataRepository
         $stmt->execute();
         $metaData['status'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $stmt = $con->prepare("SELECT * FROM tagi");
+        $stmt = $con->prepare("
+            SELECT t.*, (select count(*) liczba from kupony_tagi kt where kt.tag_id = t.tag_id GROUP BY t.tag_id) liczba 
+            FROM tagi as t JOIN usersdata ud on t.user_id = ud.id WHERE username LIKE :user");
+        $stmt->bindValue(':user', $user, PDO::PARAM_STR);
         $stmt->execute();
         $metaData['tagi'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return $metaData;
     }
 
-    public function dodajZaklad($data, $user)
+
+    // fetch
+    public function dodajZaklad($noweZaklady, $user, $stawka, $tagi)
     {
         $con = $this->database->setConnection();
         $status = 1;
-        foreach ($data as $z)
+        foreach ($noweZaklady as $z)
             if ($z['status'] == 0) {
                 $status = 0;
                 break;
             }
-        foreach ($data as $z)
+
+        foreach ($noweZaklady as $z)
             if ($z['status'] == -1) {
                 $status = -1;
                 break;
             }
 
         $stmt = $con->prepare(
-            "INSERT into kupony (user_id, status_id, data_obstawienia)
+            "INSERT into kupony (user_id, status_id, data_obstawienia, stawka)
             values 
-            ((SELECT id from usersdata where username like :user ), :status ,NOW())
+            ((SELECT id from usersdata where username like :user ), :status ,NOW(), :stawka)
             RETURNING kupon_id"
         );
         $stmt->bindValue(':user', $user, PDO::PARAM_STR);
         $stmt->bindValue(':status', $status, PDO::PARAM_INT);
+        $stmt->bindValue(':stawka', $stawka, PDO::PARAM_STR);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
+        $nowyKuponId = intval($result['kupon_id']);
+        // dodanie tagów
+        foreach ($tagi as $tag) {
+            $stmt = $con->prepare("INSERT INTO kupony_tagi values ( :kuponId , :tagId )");
+            $stmt->bindValue(':kuponId', $result['kupon_id'], PDO::PARAM_INT);
+            $stmt->bindValue(':tagId', $tag, PDO::PARAM_INT);
+            $stmt->execute();
+        }
 
         $nowyKupon = [];
-        foreach ($data as $z) {
+        foreach ($noweZaklady as $z) {
 
             $stmt = $con->prepare("INSERT INTO
             zaklady (zaklad_id, kupon_id, mecz_id, zaklad_rodzaj_id, zaklad_wartosc_id, status_id, kurs)
@@ -173,25 +183,112 @@ class DataRepository
             $stmt->bindValue(':kuponId', $result['kupon_id'], PDO::PARAM_INT);
             $stmt->bindValue(':mecz_id', $z['mecz'], PDO::PARAM_INT);
             $stmt->bindValue(':zaklad_rodzaj_id', $z['zaklad_r'], PDO::PARAM_INT);
-            $stmt->bindValue(':zaklad_wartosc_id', explode('_',$z['zaklad_w'])[0], PDO::PARAM_INT);
+            $stmt->bindValue(':zaklad_wartosc_id', explode('_', $z['zaklad_w'])[0], PDO::PARAM_INT);
             $stmt->bindValue(':status_id', $z['status'], PDO::PARAM_INT);
             $stmt->bindValue(':kurs', $z['kurs'], PDO::PARAM_STR);
             $stmt->execute();
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $result2 = $stmt->fetch(PDO::FETCH_ASSOC);
             //array_push($nowyKupon, $this->getKuponWithId($user, $result['kupon_id'], $con));
-           // array_push($nowyKupon, $result  );
+            // array_push($nowyKupon, $result  );
 
         }
-        array_push($nowyKupon, $this->getMetaData());
-        array_push($nowyKupon, $this->getKuponWithId($user, $result['kupon_id'], $con));
-        return $nowyKupon;
+
+
+        $con = $this->database->setConnection();
+
+        $stmt = $con->prepare('SELECT 
+               k.kupon_id, 
+               k.data_obstawienia,
+               k.stawka,
+               z.zaklad_id,
+               z.mecz_id, 
+               z.kurs,
+               s_z.status as status_zakladu, 
+               s_k.status as status_kuponu,
+               rz.rodzaj_zakladu, rw.wartosc_zakladu,
+               m.data_meczu, 
+               d1.druzyna_nazwa AS gospodarz,
+               d2.druzyna_nazwa AS gość
+        FROM zaklady z
+            JOIN kupony k USING (kupon_id)
+            JOIN _zaklady_rodzaje rz USING (zaklad_rodzaj_id)
+            JOIN _zaklady_wartosci rw USING (zaklad_rodzaj_id, zaklad_wartosc_id)
+            JOIN mecze m USING (mecz_id)
+            JOIN druzyny d1 ON m.druzyna_1_id = d1.druzyna_id
+            JOIN druzyny d2 ON m.druzyna_2_id = d2.druzyna_id
+            JOIN usersdata u on k.user_id = u.id
+            JOIN _status s_z on z.status_id = s_z.status_id
+            JOIN _status s_k on k.status_id = s_k.status_id
+        WHERE u.username LIKE :username
+        AND k.kupon_id = :kupon_id');
+        $stmt->bindParam(':username', $user, PDO::PARAM_STR);
+        $stmt->bindParam(':kupon_id', $nowyKuponId, PDO::PARAM_STR);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $kupon = $this->stowrzKupon($result);
+        $kupon = $this->dodajTagiDoKuponu($kupon, $con);
+        return $this->dodajZakladyDoKuponu($result, $kupon);
+
     }
 
+    private function stowrzKupon($result): ?Kupon
+    {
+        $r = $result[0];
+        $kupon = new Kupon(
+            $r['kupon_id'],
+            $r['status_zakladu'],
+            $r['stawka'],
+            $r['data_obstawienia']);
 
-    private function dodajTagiDoKuponow($kupony, $con) : array{
+        return $kupon;
+    }
 
-        foreach($kupony as $k)
-        {
+    private function dodajTagiDoKuponu($k, $con): Kupon
+    {
+        $stmt = $con->prepare('SELECT t.*
+            FROM kupony_tagi kt 
+            LEFT JOIN tagi t on kt.tag_id = t.tag_id 
+            where kt.kupon_id = :kupon_id
+            AND t.aktywny = true');
+        $stmt->bindValue(':kupon_id', $k->id);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+        foreach ($result as $tag)
+            array_push($k->tagi, ['id' => $tag['tag_id'], 'nazwa' => $tag['nazwa'], 'kolor' => $tag['kolor'], 'aktywny' => $tag['aktywny']]);
+
+        return $k;
+    }
+
+    private function dodajZakladyDoKuponu($result, $kupon): ?Kupon
+    {
+        foreach ($result as $r) {
+            $zaklad = new Zaklad(
+                $r['kupon_id'],
+                $r['zaklad_id'],
+                $r['mecz_id'],
+                $r['gospodarz'],
+                $r['gość'],
+                $r['rodzaj_zakladu'],
+                $r['wartosc_zakladu'],
+                $r['data_meczu'],
+                $r['status_zakladu'],
+                $r['kurs']
+            );
+            $kupon->dodajZaklad($zaklad);
+        }
+
+        return $kupon;
+    }
+
+//  koniec
+
+    private function dodajTagiDoKuponow($kupony, $con): array
+    {
+
+        foreach ($kupony as $k) {
             $stmt = $con->prepare("SELECT  
                 kt.kupon_id,
                 kt.tag_id,
@@ -204,17 +301,15 @@ class DataRepository
             LEFT JOIN tagi t on kt.tag_id = t.tag_id 
             where kt.kupon_id = :kupon_id
             AND t.aktywny = true");
-            $stmt->bindValue(':kupon_id',$k->id);
+            $stmt->bindValue(':kupon_id', $k->id);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            foreach($result as $tag)
-                $k->dodajTag(new Tag($tag['tag_id'],$tag['nazwa'],$tag['kolor'],$tag['aktywny'] ));
+            foreach ($result as $tag)
+                $k->dodajTag(new Tag($tag['tag_id'], $tag['nazwa'], $tag['kolor'], $tag['aktywny']));
         }
         return $kupony;
     }
-
-
 
 
     private function dodajZakladyDoKuponow($result, $kupony): ?array
@@ -239,6 +334,7 @@ class DataRepository
         return $kupony;
     }
 
+
     private function stworzListeKuponow($result): ?array
     {
         $kupony = [];
@@ -251,6 +347,49 @@ class DataRepository
                     $r['data_obstawienia']);
 
         return $kupony;
+    }
+
+
+    public function loadMoreKupons($lastId, $username)
+    {
+
+        $con = $this->database->setConnection();
+        $stmt = $con->prepare('SELECT 
+               k.kupon_id, 
+               k.data_obstawienia,
+               k.stawka,
+               z.zaklad_id,
+               z.mecz_id, 
+               z.kurs,
+               s_z.status as status_zakladu, 
+               s_k.status as status_kuponu,
+               rz.rodzaj_zakladu, rw.wartosc_zakladu,
+               m.data_meczu, 
+               d1.druzyna_nazwa AS gospodarz,
+               d2.druzyna_nazwa AS gość
+        FROM zaklady z
+            JOIN kupony k USING (kupon_id)
+            JOIN _zaklady_rodzaje rz USING (zaklad_rodzaj_id)
+            JOIN _zaklady_wartosci rw USING (zaklad_rodzaj_id, zaklad_wartosc_id)
+            JOIN mecze m USING (mecz_id)
+            JOIN druzyny d1 ON m.druzyna_1_id = d1.druzyna_id
+            JOIN druzyny d2 ON m.druzyna_2_id = d2.druzyna_id
+            JOIN usersdata u on k.user_id = u.id
+            JOIN _status s_z on z.status_id = s_z.status_id
+            JOIN _status s_k on k.status_id = s_k.status_id
+        WHERE u.username LIKE :username
+        AND k.kupon_id < :lastId
+        ORDER BY k.kupon_id DESC, z.zaklad_id
+        LIMIT 10');
+
+        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+        $stmt->bindParam(':lastId', $lastId, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $kupony = $this->stworzListeKuponow($result);
+        $kupony = $this->dodajTagiDoKuponow($kupony, $con);
+        return $this->dodajZakladyDoKuponow($result, $kupony);
+
     }
 
 

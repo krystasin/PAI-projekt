@@ -1,69 +1,102 @@
 .kupon{
     font-size: 15px;
-    border: 3px solid black;
-    margin: 20px 0 20px 0;
-    padding: 4px;
+    border: 1px solid rgb(87, 81, 81);
+    margin: 20px 0 10px 0;
+    padding: 10px 10px 3px 10px;
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 45rem;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-radius: 3px;
 
 }
-.kupon-header, .kupon-bottom  {
+.kupon-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+.kupon-mid  {
+    display: flex;
+    flex-direction: row;
+    margin: .7em 0 .4em 0;
+}
+
+.kupon-bottom  {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
+.x-c-1{
+    flex-grow: 2;
+}
 
+.x-c-2{
+    flex-grow: 2;
+    text-align: center;
+}
 
-
-
-.kupon-bottom {
-    margin: 6px 0 3px 5px;
+.x-c-3{
+    flex-grow: 3;
+    text-align: right;
+}
+.kupon-header {
+    font-size: larger;
 }
 
 
+
+
+.kupon-mid-L{
+    width:35rem;
+}
+.kupon-mid-R{
+    width: 10rem;
+
+    text-align: right;
+}
 
 .zaklad{
     border-bottom: 1px solid #aaa;
+    padding: 0 0 2px 3px;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: .6rem;
 }
-.kupon-column{
-    margin: 4px;
-}
+
 .zaklad-pozycja{
     padding-right: 10px;
 }
-.wygrany{
-    color: limegreen;
-}
-.przegrany{
-    color: red;
-}
-.nierozstrzygnięty{
-    color: gray;
-}
+
 .col1{
-    width: 250px;
+    min-width: 25rem;
 }
 .col2{
-    width: 150px;
+    width: auto;
 }
-.druzyny{
+.data-meczu{
+    text-align: right;
 }
 .bet{
     font-size: 14px;
-    color: #333;
+    color: rgb(71, 46, 46);
 }
-/*przycisk*/
-/*przycisk*/
-/*przycisk*/
-.dodajNowyZaklad{
-    /*display: none;*/
+.opis-std {
+    color: #777;
 }
 
+
+
+
+
+
+/* DODAWANIE NOWEGO ZAKLADU */
+/* DODAWANIE NOWEGO ZAKLADU */
+/* DODAWANIE NOWEGO ZAKLADU */
 
 .noway-zaklad-all{
+    margin-top: 20px;
     display: flex;
     flex-direction: row;
 }
@@ -75,9 +108,21 @@
 .nowy-zaklad-template-formularz {
     margin: 10px 0 0 0px;
     display: flex;
-    flex-direction: row;
-
+    flex-direction: column;
 }
+.nowy-zaklad-temp-upper{
+
+    display: flex;
+    flex-direction: column;
+}
+.nowy-zaklad-temp-lower{
+
+    display: flex;
+    flex-direction: row;
+}
+
+
+
 .nowy-zaklad-collumn{
     border-bottom: 1px solid;
 
@@ -103,6 +148,8 @@
 }
 .input-stawka{
     margin-left: 10px;
+    height: 20px;
+    width: 80px;
 }
 
 
@@ -114,11 +161,6 @@
 
 
 }
-.nowy-zaklad-form input{
-    height: 20px;width: 168px;
-
-}
-
 
 
 
@@ -149,6 +191,40 @@
     margin: 29px 0 0 5px;
 }
 
+/*TAGI*//*TAGI*//*TAGI*/
+
+.tags-div{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+
+.tags-div:hover > .form-tags-all-checkboxs{
+   display: flex;
+    flex-direction: column;
+}
+
+.form-tags-all-checkboxs{
+    position: absolute;
+    left: -2px;
+    border-left: 1px solid #ccc;
+    top: 20px;
+    order: 1;
+    display: none;
+    width: 150px;
+    background-color: #888;
+
+}
+
+.form-tag-p{
+    padding: 2px 0 0 0;
+    color: #fff;
+border-bottom: 1px solid black;
+}
+.checkbox-tag{
+    width:30px !important;
+}
 
 
 
@@ -170,9 +246,21 @@
 
 
 
+ /*KONIEC*/
+ /*KONIEC*/
+ /*KONIEC*/
+ /*KONIEC*/
+ /*KONIEC*/
+ /*KONIEC*/
 
 
-
-
-
+.wygrany{
+    color: limegreen;
+}
+.przegrany{
+    color: red;
+}
+.nierozstrzygnięty{
+    color: gray;
+}
 

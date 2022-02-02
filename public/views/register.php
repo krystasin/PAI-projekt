@@ -2,48 +2,46 @@
 require_once __DIR__ . '/headers/header.php';
 ?>
 
-<content>
+<div class="container">
 
-    <div class=login-content>
-        <div class="loginPage-logo">
-            <div class="message">
-                <?php
-                if (isset($messages)) {
-                    foreach ($messages as $m) {
-                        print $m;
-                    }
-                }
-                ?>
-            </div>
-            <img src="../img/logo.png">
-        </div>
+    <div class="loggedOut-content">
 
-        <div class="login-right">
+        <div class='register-panel'>
 
-
-            <a href = "/">Wróć do strony logowania</a>
-            <form class="adding" action="registerTeacher" method="post">
+            <a href='/'>Wróć do strony logowania</a>
+            <form class='register-form' action='register' method='post'>
                 <?php
                 if (isset($messages))
                     foreach ($messages as $message)
                         echo $message;
                 ?>
-                <input name="Name" type="text" class="regInput" placeholder="Imię">
-                <input name="Surname" type="text" class="regInput" placeholder="Nazwisko">
-                <input name="Email" type="text" class="regInput" placeholder="Adres email">
-                <input name="Username" type="text" class="regInput" placeholder="Nazwa Użytkownika">
-                <input name="Password" type="password" class="regInput" placeholder="Hasło">
-                <!--dodac inputa z wyborem konta -->
+                <div class="register-inputs">
 
+                    <div class="register-col">
+                        <label for="login" class="reg-label">login*</label>
+                        <label for="email" class="reg-label">email*</label>
+                        <label for="username" class="reg-label">username*</label>
+                        <label for="passwor" class="reg-label">hasło*</label>
+                        <label for="password2" class="reg-label">powtórz hasło*</label>
+                    </div>
+                    <div class="register-col">
+                        <input name="login" type="text" class="regInput">
+                        <input name="email" type="text" class="regInput">
+                        <input name="username" type="text" class="regInput">
+                        <input name="password" type="password" class="regInput">
+                        <input name="password2" type="password" class="regInput">
+                    </div>
 
-                    <button class="buttNext">
-                        Zarejestruj
-                    </button>
+                </div>
+                <button class='login-btn btn-color' type='submit'>Zarejestruj</button>
+
 
             </form>
-
         </div>
-    </div>
-</content>
 
-require_once __DIR__ . '/public/views/static/footer.php';
+    </div>
+
+    <?php require_once 'static/footer.php'; ?>
+</div>
+
+

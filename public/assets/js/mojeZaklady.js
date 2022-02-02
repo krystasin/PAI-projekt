@@ -1,9 +1,9 @@
 let nrZakladuWForm = 0;
-przyciskiWidzoczne = false;
+przyciskiWidzoczne = true;
 
 document.querySelector(".dodajNowyZakladPrzycisk").addEventListener("click", function () {
     this.style.display = "none";
-    tooglePrzyciski(true);
+    tooglePrzyciski();
     dodajNowyZakladDoForm();
 })
 
@@ -11,9 +11,9 @@ document.querySelector(".dodaj-kolejny-zaklad-przycisk").addEventListener("click
     dodajNowyZakladDoForm();
 })
 
+
 function dodajNowyZakladDoForm() {
-    const x = document.querySelector(".nowy-zaklad-template").cloneNode(true);
-    x.style.display = "flex";
+    const x = document.querySelector("#nowy-zaklad-template-t").content.children[0].cloneNode(true);
 
     [...x.querySelectorAll('input')].forEach(el => {
         el.name = `${el.name.split('[')[0]}[${nrZakladuWForm}]`;
@@ -23,56 +23,32 @@ function dodajNowyZakladDoForm() {
             el.value = 1.0;
     });
 
+    // usuwanie FORM z zakladem z formularza
     x.querySelector(".usun-zaklad-przycisk").addEventListener("click", function () {
         this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode);
-        //todo sprwdzić ile zostało w form => tooglePrzyciski();
+        const pozostale = document.querySelectorAll('.nowy-zaklad-template-formularz');
+        if (pozostale.length == 0) tooglePrzyciski();
     })
 
 
-
+    // filtowanie <select> z odzajami zakładów i ich watościami
     x.querySelector(".rodzaj-zaklad-select").addEventListener("change", function () {
         const sel2 = x.querySelector(".wartosc-zaklad-select");
         const val = sel2.options;
-
         sel2.value = "";
-        /*
-                const sel = x.querySelector(".rodzaj-zaklad-select");
-               const wybrany_zaklad = sel.options[sel.selectedIndex];
-
-
-                console.log("porownianie do: " + wybrany_zaklad.value);
-
-
-                for (var i = 0, len = sel2.options.length; i < len; i++) {
-                    opt = sel2.options[i];
-
-                    if (opt.value.split("_")[1] != wybrany_zaklad.value) {
-                        console.log("hide " + opt.value.split("_")[0] + "+" + opt.value.split("_")[1]);
-                        opt.hidden = true;
-                    } else {
-                        console.log("show " + opt.value.split("_")[0] + "+" + opt.value.split("_")[1]);
-                        opt.hidden = false;
-
-                    }
-                }
-                console.log("______");*/
-
     })
-
 
 
     x.querySelector(".wartosc-zaklad-select").addEventListener("focus", function () {
         this.select
         const sel = x.querySelector(".rodzaj-zaklad-select");
         const wybrany_zaklad = sel.options[sel.selectedIndex];
-    //    const sel2 = x.querySelector(".wartosc-zaklad-select");
-        for (var i = 0, len = this.options.length; i < len; i++){
+        //    const sel2 = x.querySelector(".wartosc-zaklad-select");
+        for (var i = 0, len = this.options.length; i < len; i++) {
             this.options[i].hidden = this.options[i].value.split("_")[1] != wybrany_zaklad.value;
         }
 
     })
-
-
 
 
     document.querySelector(".nowy-zaklad-form").append(x);
@@ -80,6 +56,7 @@ function dodajNowyZakladDoForm() {
 }
 
 
+// WYSŁANIE FORMULARZU
 document.addEventListener("DOMContentLoaded", function () {
 
     document.querySelector('.nowy-zaklad-button').addEventListener('click', function () {
@@ -93,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let tempDataToSent = [];
         for (var i = 0; i < mecz.length; i++) {
-            if(zaklad_w[i].value == "")   {
+            if (zaklad_w[i].value == "") {
                 console.log("nie wybrano wartosci zakładu => nie wysłano zapytania");
                 return;
             }
@@ -104,17 +81,25 @@ document.addEventListener("DOMContentLoaded", function () {
                 'kurs': kurs[i].value,
                 'status': status[i].value,
             }
-            console.log(nowyZaklad);
             tempDataToSent[i] = nowyZaklad;
-
         }
+
+        const wszystkie_tagi = document.querySelectorAll('.checkbox-tag');
+        let wybane_tagi = [];
+
+        wszystkie_tagi.forEach(ch => {
+            if (ch.checked) wybane_tagi.push(ch.value)
+        });
+
+
+        const stawka = document.querySelector('.input-stawka').value;
         let dataToSent = {
-            'data': tempDataToSent
-
+            'data': tempDataToSent,
+            'stawka': stawka,
+            'tagi': wybane_tagi
         }
-        console.log(dataToSent);
         dataTo = JSON.stringify(dataToSent);
-        console.log(dataTo);
+
         fetch("/dodajZaklad", {
             method: "POST",
             headers: {
@@ -123,80 +108,156 @@ document.addEventListener("DOMContentLoaded", function () {
             body: dataTo
         })
             .then(res => res.json())
-            .then(function (res){
+            .then(function (res) {
                 console.log(res);
-                createKupon(res);
+                createKupon(res, true);
             })
+        document.querySelector(".dodajNowyZakladPrzycisk").style.display = "block";
+
+        [...document.querySelectorAll('.nowy-zaklad-template')].forEach(el => {
+            el.remove();
+        });
+        tooglePrzyciski();
+
+
     });
 });
 
+
 function tooglePrzyciski() {
-    if (!przyciskiWidzoczne) {
-        document.querySelector(".nowy-zaklad-button").style.display = "block";
+    if (przyciskiWidzoczne) {
+        document.querySelector(".dodajNowyZakladPrzycisk").style.display = "none";
+        document.querySelector(".nowy-zaklad-form").style.display = "block";
         document.querySelector(".dodaj-kolejny-zaklad-przycisk").style.display = "block";
-        document.querySelector(".input-stawka").style.display = "block";
-        document.querySelector(".label-stawka").style.display = "block";
-    }
-    else{
+    } else {
         document.querySelector(".dodajNowyZakladPrzycisk").style.display = "block";
-        document.querySelector(".nowy-zaklad-button").style.display = "none";
+        document.querySelector(".nowy-zaklad-form").style.display = "none";
         document.querySelector(".dodaj-kolejny-zaklad-przycisk").style.display = "none";
     }
-
+    przyciskiWidzoczne = !przyciskiWidzoczne;
 }
 
+// WYŚWIETLANIE KUPONU PO DODANIU
 
+function createKupon(kupon_obj, czyNaPoczatku) {
 
-function createKupon(data) {
-    console.log("data:");
-    console.log(data);
-    const metadata = data[0];
-    const zaklady = data[1];
+    const zaklady = kupon_obj.zaklady;
+    const tagi = kupon_obj.tagi;
 
-    console.log("zaklady");
-    console.log(zaklady);
 
     const template = document.querySelector("#kupon-template");
 
     const kupon = template.content.children[0].cloneNode(true);
+    kupon.setAttribute("id", "kupon-" + kupon_obj.id);
+
     let header = kupon.querySelector(".kupon-header");
-    header.querySelector(".id-kuponu").innerHTML = "#" + zaklady.kupon_id;
-    header.querySelector(".data_meczu").innerHTML = zaklady[0].data_meczu;
-    header.querySelector("span").innerHTML = zaklady[0].status_kuponu;
-    header.querySelector("span").classList.add(zaklady[0].status_kuponu);
+    header.querySelector(".kupon-id").innerHTML = "#" + kupon_obj.id;
 
-    zaklady.forEach(zaklad => {
-        createZaklad(zaklad, kupon);
-    });
-    createBottomTemplate(zaklady[0], kupon )
+    header.querySelector(".data-obstawienia").innerHTML = kupon_obj.dataObstawienia.date.slice(0, -10);
+    header.querySelector("span").innerHTML = kupon_obj.status;
+    header.querySelector("span").classList.add(kupon_obj.status);
 
-    console.log("kupon::");
-    console.log(kupon);
-
-    document.querySelector(".wszystkieKupony").innerHTML = kupon.outerHTML + document.querySelector(".wszystkieKupony").innerHTML;
-
+    createMid(zaklady, kupon, tagi);
+    createBottomTemplate(kupon_obj, kupon)
+    if(czyNaPoczatku == true)
+        document.querySelector('.wszystkieKupony').prepend(kupon);
+    else
+        document.querySelector('.wszystkieKupony').append(kupon);
 }
 
-function createZaklad(zaklad, kupon) {
+function createMid(zaklady, kupon, tagi) {
+    let mid = document.querySelector('#kupon-mid-template').content.children[0].cloneNode(true);
+
+    let zakladyDiv = mid.querySelector(".kupon-mid-L");
+    console.log(zakladyDiv);
+    zaklady.forEach(zaklad => {
+        createZaklad(zaklad, zakladyDiv);
+    });
+
+
+    let tagiDiv = mid.querySelector(".kupons-tags");
+    tagi.forEach(tag => {
+        const p = document.createElement("p");
+        p.classList.add("tag");
+        p.style.color = tag.kolor;
+        p.innerHTML = tag.nazwa;
+        tagiDiv.append(p);
+    });
+
+
+    kupon.append(mid);
+}
+
+function createZaklad(zaklad, zakladyDiv) {
     const template = document.querySelector("#zaklad-template");
     const zakladDiv = template.content.cloneNode(true);
 
-    zakladDiv.querySelector(".druzyny").innerHTML = zaklad.gospodarz + " - " + zaklad.gość;
-    zakladDiv.querySelector(".bet").innerHTML = zaklad.rodzaj_zakladu + ": " + zaklad.wartosc_zakladu;
-    zakladDiv.querySelector(".dataMeczu").innerHTML = zaklad.data_meczu;
-    zakladDiv.querySelector(".zakladu-kurs").innerHTML = zaklad.kurs;
-    kupon.append(zakladDiv);
+    zakladDiv.querySelector(".druzyny").innerHTML = zaklad.gospodarz + " - " + zaklad.gosc;
+    zakladDiv.querySelector(".bet").innerHTML = zaklad.rodzajZakladu + ": " + zaklad.wartoscZakladu;
+    zakladDiv.querySelector(".data-meczu").innerHTML = zaklad.dataMeczu.date.slice(0, -10);
+    zakladDiv.querySelector(".kurs-val").innerHTML = zaklad.kurs;
+    zakladyDiv.append(zakladDiv);
 }
 
-function createBottomTemplate(zaklad, kupon){
+function createBottomTemplate(kupon_obj, kupon) {
+
     const template = document.querySelector("#kupon-bottom-template");
     const bottom = template.content.cloneNode(true);
-
-    bottom.querySelector(".stawka").innerHTML = "stawka: "+ zaklad.stawka;
-    bottom.querySelector(".kurs").innerHTML = zaklad.kurs;
-    bottom.querySelector(".pot-wygrana").innerHTML = "$" + zaklad.kurs * zaklad.stawka;
-    console.log(zaklad.stawka);
+    let kurs_calosc = 1.0;
+    kupon_obj.zaklady.forEach(z => {
+        kurs_calosc = kurs_calosc * z.kurs;
+    });
+    bottom.querySelector(".stawka").innerHTML = bottom.querySelector(".stawka").innerHTML + kupon_obj.stawka;
+    bottom.querySelector(".kurs").innerHTML = bottom.querySelector(".kurs").innerHTML + kurs_calosc;
+    bottom.querySelector(".pot-wygrana").innerHTML = bottom.querySelector(".pot-wygrana").innerHTML + Math.round(kurs_calosc * kupon_obj.stawka.split('$')[1] * 100) / 100;
+    // console.log(zaklad.stawka);
     kupon.append(bottom);
 }
+
+// WYŚWIETLANIE KUPONU PO DODANIU   -   KONIEC
+
+
+document.querySelector(".load-more").addEventListener("click", () => {
+    const wszystkieKupony = document.querySelector(".wszystkieKupony");
+    const kupony = wszystkieKupony.querySelectorAll('.kupon')
+    const lastID = {
+        'lastID': kupony[kupony.length - 1].querySelector(".kupon-id").innerHTML.slice(1)
+    }
+    dataToSent = JSON.stringify(lastID);
+    console.log(dataToSent);
+
+    fetch("/loadMoreKupons", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: dataToSent
+    })
+        .then(res => res.json())
+        .then(function (res) {
+            console.log(res);
+            for (const [key, value] of Object.entries(res).reverse()) {
+                createKupon(value, false);
+            }
+
+        })
+
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
