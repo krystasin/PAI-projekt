@@ -16,8 +16,11 @@
                 <div class="nowy-zaklad-template-formularz">
 
 
-                    <div class='nowy-zaklad-temp-upper'>
-                        <label class='label-mecz' name='mecz[arrayNumer]'>mecz</label>
+                    <div class='nowy-zaklad-temp-upper nz-main-row'>
+                        <div class="nz-mecz-head">
+                            <label class='label-mecz' name='mecz[arrayNumer]'>mecz</label>
+                            <input type='text' class='nz-mecz-filtr' name="filtr">
+                        </div>
                         <select name='mecz[arrayNumer]' class='input-mecz'>
                             <?php foreach ($metaData['mecze'] as $m) { ?>
                                 <option value="<?= $m['mecz_id'] ?>"> <?= $m['gospodarz'] . ' - ' . $m['gosc'] . '&nbsp;&nbsp;&nbsp;' . $m['data_meczu'] ?> </option> <?php } ?>

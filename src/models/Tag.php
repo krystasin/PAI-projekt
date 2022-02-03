@@ -9,15 +9,19 @@ class Tag
     public int $iloscUzyc;
     public bool $aktywny;
 
-    public function __construct(int $id, string $nazwa, string $kolor, bool $aktywny, ?string $opis = "", ?int $iloscUzyc = 0 )
+    public function __construct(int $id, string $nazwa, string $kolor, bool $aktywny, ?string $opis = "", ?int $iloscUzyc = 0)
     {
         $this->id = $id;
         $this->nazwa = $nazwa;
         $this->kolor = $kolor;
         $this->aktywny = $aktywny;
-        $this->iloscUzyc = $iloscUzyc;
 
-        if($opis === null)
+        if ($iloscUzyc === null)
+            $this->iloscUzyc = 0;
+        else
+            $this->iloscUzyc = $iloscUzyc;
+
+        if ($opis === null)
             $this->opis = "";
         else
             $this->opis = $opis;

@@ -18,8 +18,7 @@ document.querySelector(".dodaj-tag-button").addEventListener("click", function (
 
     if (!validateName(nazwa)) return;
 
-    createTag(nowyTag);
-    return;
+
 
 
     const nowyTagJson = JSON.stringify(nowyTag);
@@ -134,7 +133,7 @@ function usunTag(el) {
     dataToSend = JSON.stringify(data);
 
 
-    fetch("/dodajTag", {
+    fetch("/usunTag", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
@@ -143,7 +142,8 @@ function usunTag(el) {
     })
         .then(res => res.json())
         .then(function (res) {
-            createTag(res);
+            console.log(res);
+            par.remove();
         })
 
 }

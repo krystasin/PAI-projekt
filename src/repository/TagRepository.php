@@ -38,7 +38,6 @@ FROM tagi t WHERE user_id = (SELECT id from usersdata WHERE username LIKE :usern
 
 
 
-
         $stmt->bindValue(':nazwa', $nazwa, PDO::PARAM_STR);
         $stmt->bindValue(':kolor', $kolor, PDO::PARAM_STR);
         $stmt->bindValue(':opis', $opis, PDO::PARAM_STR);
@@ -52,8 +51,8 @@ FROM tagi t WHERE user_id = (SELECT id from usersdata WHERE username LIKE :usern
         $con = $this->database->setConnection();
 
         $stmt = $con->prepare("
-UPDATE tagi set aktywny = :stan WHERE tag_id = :id RETURNING tag_id, aktywny
-");
+            UPDATE tagi set aktywny = :stan WHERE tag_id = :id RETURNING tag_id, aktywny
+            ");
 
         $stmt->bindValue(':stan', $stan, PDO::PARAM_BOOL);
         $stmt->bindValue(':id', $idTagu, PDO::PARAM_INT);
@@ -62,7 +61,17 @@ UPDATE tagi set aktywny = :stan WHERE tag_id = :id RETURNING tag_id, aktywny
     }
 
     public function usunTag($idTagu){
+        $con = $this->database->setConnection();
 
+        $stmt = $con->prepare('DELETE FROM kupony_tagi WHERE tag_id = :id');
+        $stmt->bindValue(':id', $idTagu, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $stmt = $con->prepare('DELETE FROM tagi WHERE tag_id = :id');
+        $stmt->bindValue(':id', $idTagu, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return ['result' => true];
     }
 
 

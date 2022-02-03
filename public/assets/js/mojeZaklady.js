@@ -47,6 +47,26 @@ function dodajNowyZakladDoForm() {
         for (var i = 0, len = this.options.length; i < len; i++) {
             this.options[i].hidden = this.options[i].value.split("_")[1] != wybrany_zaklad.value;
         }
+    })
+
+    x.querySelector('.nz-mecz-filtr').addEventListener("input", function () {
+        const query = this.value.split(" ");
+        const sel = x.querySelector(".input-mecz");
+
+        console.log(query);
+        for (var i = 0, len = sel.options.length; i < len; i++)
+        {
+            let czyZawiera = true;
+            const mecz = sel.options[i].innerText;
+
+            query.forEach(q => {
+                if (!mecz.toLowerCase().includes(q.toLowerCase()))  czyZawiera = false;
+            })
+            sel.options[i].hidden = !czyZawiera;
+            sel.options[i].disabled = !czyZawiera;
+            console.log(sel.options[i].innerText, !czyZawiera);
+        }
+
 
     })
 
@@ -159,7 +179,7 @@ function createKupon(kupon_obj, czyNaPoczatku) {
 
     createMid(zaklady, kupon, tagi);
     createBottomTemplate(kupon_obj, kupon)
-    if(czyNaPoczatku == true)
+    if (czyNaPoczatku == true)
         document.querySelector('.wszystkieKupony').prepend(kupon);
     else
         document.querySelector('.wszystkieKupony').append(kupon);
