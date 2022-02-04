@@ -82,6 +82,7 @@ function createTag(tag) {
 [...document.querySelectorAll(".tag-aktywny-checkbox")].forEach(el => el.addEventListener("change", function () {
     zmienAktywnosc(this);
 }));
+
 [...document.querySelectorAll(".remove-tag")].forEach(el => el.addEventListener("click", function () {
     usunTag(this);
 }));

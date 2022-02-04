@@ -1,7 +1,7 @@
 let nrZakladuWForm = 0;
 przyciskiWidzoczne = true;
 
-document.querySelector(".dodajNowyZakladPrzycisk").addEventListener("click", function () {
+document.querySelector(".dodajNowyKuponPrzycisk").addEventListener("click", function () {
     this.style.display = "none";
     tooglePrzyciski();
     dodajNowyZakladDoForm();
@@ -54,13 +54,12 @@ function dodajNowyZakladDoForm() {
         const sel = x.querySelector(".input-mecz");
 
         console.log(query);
-        for (var i = 0, len = sel.options.length; i < len; i++)
-        {
+        for (var i = 0, len = sel.options.length; i < len; i++) {
             let czyZawiera = true;
             const mecz = sel.options[i].innerText;
 
             query.forEach(q => {
-                if (!mecz.toLowerCase().includes(q.toLowerCase()))  czyZawiera = false;
+                if (!mecz.toLowerCase().includes(q.toLowerCase())) czyZawiera = false;
             })
             sel.options[i].hidden = !czyZawiera;
             sel.options[i].disabled = !czyZawiera;
@@ -86,12 +85,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const zaklad_w = form.querySelectorAll(".wartosc-zaklad-select");
         const kurs = form.querySelectorAll(".nowy-zaklad-input-number");
         const status = form.querySelectorAll(".input-status");
-
+        let czyWyjsc = false;
         let tempDataToSent = [];
         for (var i = 0; i < mecz.length; i++) {
             if (zaklad_w[i].value == "") {
-                console.log("nie wybrano wartosci zakładu => nie wysłano zapytania");
-                return;
+                alert("Nie wybrano wartosci zakładu.");
+                return czyWyjsc = true;
             }
             nowyZaklad = {
                 'mecz': mecz[i].value,
@@ -100,8 +99,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 'kurs': kurs[i].value,
                 'status': status[i].value,
             }
+            console.log(nowyZaklad);
             tempDataToSent[i] = nowyZaklad;
         }
+        if(czyWyjsc)  return;
 
         const wszystkie_tagi = document.querySelectorAll('.checkbox-tag');
         let wybane_tagi = [];
@@ -131,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log(res);
                 createKupon(res, true);
             })
-        document.querySelector(".dodajNowyZakladPrzycisk").style.display = "block";
+        document.querySelector(".dodajNowyKuponPrzycisk").style.display = "block";
 
         [...document.querySelectorAll('.nowy-zaklad-template')].forEach(el => {
             el.remove();
@@ -145,11 +146,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function tooglePrzyciski() {
     if (przyciskiWidzoczne) {
-        document.querySelector(".dodajNowyZakladPrzycisk").style.display = "none";
+        document.querySelector(".dodajNowyKuponPrzycisk").style.display = "none";
         document.querySelector(".nowy-zaklad-form").style.display = "block";
         document.querySelector(".dodaj-kolejny-zaklad-przycisk").style.display = "block";
     } else {
-        document.querySelector(".dodajNowyZakladPrzycisk").style.display = "block";
+        document.querySelector(".dodajNowyKuponPrzycisk").style.display = "block";
         document.querySelector(".nowy-zaklad-form").style.display = "none";
         document.querySelector(".dodaj-kolejny-zaklad-przycisk").style.display = "none";
     }
@@ -211,6 +212,7 @@ function createZaklad(zaklad, zakladyDiv) {
     const template = document.querySelector("#zaklad-template");
     const zakladDiv = template.content.cloneNode(true);
 
+    zakladDiv.querySelector(".bg-icon-zaklad").classList.add("bg-" + zaklad.status);
     zakladDiv.querySelector(".druzyny").innerHTML = zaklad.gospodarz + " - " + zaklad.gosc;
     zakladDiv.querySelector(".bet").innerHTML = zaklad.rodzajZakladu + ": " + zaklad.wartoscZakladu;
     zakladDiv.querySelector(".data-meczu").innerHTML = zaklad.dataMeczu.date.slice(0, -10);
