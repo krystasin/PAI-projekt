@@ -11,8 +11,6 @@ class DataRepository extends Repository
     //todo zrobic singleton ? ? ?
 
 
-
-
     public function getAllKupons(string $username, int $limit = 10): array
     {
         $con = $this->database->setConnection();
@@ -114,13 +112,12 @@ class DataRepository extends Repository
         $stmt->execute();
         $metaData['wartosc_zakladu'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $stmt = $con->prepare("SELECT * FROM _status");
+        $stmt = $con->prepare("SELECT status_id, status FROM _status");
         $stmt->execute();
         $metaData['status'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $stmt = $con->prepare("
-            SELECT t.*, (select count(*) liczba from kupony_tagi kt where kt.tag_id = t.tag_id GROUP BY t.tag_id) liczba 
-            FROM tagi as t JOIN usersdata ud on t.user_id = ud.id WHERE username LIKE :user");
+            SELECT t.* FROM tagi as t JOIN usersdata ud on t.user_id = ud.id WHERE username LIKE :user AND t.aktywny = true");
         $stmt->bindValue(':user', $user, PDO::PARAM_STR);
         $stmt->execute();
         $metaData['tagi'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -134,31 +131,32 @@ class DataRepository extends Repository
     {
         $con = $this->database->setConnection();
         $status = 1;
+
         foreach ($noweZaklady as $z)
-            if ($z['status'] == 0) {
+            if ($z['status'] === "0") {
                 $status = 0;
                 break;
             }
 
         foreach ($noweZaklady as $z)
-            if ($z['status'] == -1) {
+            if ($z['status'] === "-1") {
                 $status = -1;
                 break;
             }
 
-        $stmt = $con->prepare(
-            "INSERT into kupony (user_id, status_id, data_obstawienia, stawka)
+        //  INSERT into kupony
+        $stmt = $con->prepare("INSERT into kupony (user_id, status_id, data_obstawienia, stawka)
             values 
             ((SELECT id from usersdata where username like :user ), :status ,NOW(), :stawka)
-            RETURNING kupon_id"
-        );
+            RETURNING kupon_id");
         $stmt->bindValue(':user', $user, PDO::PARAM_STR);
         $stmt->bindValue(':status', $status, PDO::PARAM_INT);
         $stmt->bindValue(':stawka', $stawka, PDO::PARAM_STR);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         $nowyKuponId = intval($result['kupon_id']);
-        // dodanie tagów
+
+        // dodanie tagów    -   INSERT INTO kupony_tagi
         foreach ($tagi as $tag) {
             $stmt = $con->prepare("INSERT INTO kupony_tagi values ( :kuponId , :tagId )");
             $stmt->bindValue(':kuponId', $result['kupon_id'], PDO::PARAM_INT);
@@ -167,8 +165,8 @@ class DataRepository extends Repository
         }
 
         $nowyKupon = [];
+        //  INSERT INTO zaklady
         foreach ($noweZaklady as $z) {
-
             $stmt = $con->prepare("INSERT INTO
             zaklady (zaklad_id, kupon_id, mecz_id, zaklad_rodzaj_id, zaklad_wartosc_id, status_id, kurs)
             VALUES (
@@ -180,7 +178,7 @@ class DataRepository extends Repository
                     :status_id, 
                     :kurs)
             RETURNING *");
-            $stmt->bindValue(':kuponId', $result['kupon_id'], PDO::PARAM_INT);
+            $stmt->bindValue(':kuponId', $nowyKuponId, PDO::PARAM_INT);
             $stmt->bindValue(':mecz_id', $z['mecz'], PDO::PARAM_INT);
             $stmt->bindValue(':zaklad_rodzaj_id', $z['zaklad_r'], PDO::PARAM_INT);
             $stmt->bindValue(':zaklad_wartosc_id', explode('_', $z['zaklad_w'])[0], PDO::PARAM_INT);
@@ -194,7 +192,7 @@ class DataRepository extends Repository
         }
 
 
-        $con = $this->database->setConnection();
+
 
         $stmt = $con->prepare('SELECT 
                k.kupon_id, 
@@ -237,7 +235,7 @@ class DataRepository extends Repository
         $r = $result[0];
         $kupon = new Kupon(
             $r['kupon_id'],
-            $r['status_zakladu'],
+            $r['status_kuponu'],
             $r['stawka'],
             $r['data_obstawienia']);
 

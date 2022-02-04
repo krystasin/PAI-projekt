@@ -13,7 +13,7 @@ class TagRepository extends Repository
         $con = $this->database->setConnection();
 
         $stmt = $con->prepare('SELECT t.*, (select count(*) liczba from kupony_tagi kt where kt.tag_id = t.tag_id GROUP BY t.tag_id) liczba 
-FROM tagi t WHERE user_id = (SELECT id from usersdata WHERE username LIKE :username)');
+FROM tagi t WHERE user_id = (SELECT id from usersdata WHERE username LIKE :username) ORDER BY t.tag_id DESC');
         $stmt->bindValue(':username', $username, PDO::PARAM_STR);
         $stmt->execute();
 

@@ -3,7 +3,7 @@ require_once __DIR__ . '/headers/header.php';
 ?>
 
 
-<script type='text/javascript' src='/public/assets/js/mojeTagi.js' defer></script>
+<script type='text/javascript' src='/public/assets/js/tagi.js' defer></script>
 
 
 <div class='container'>

@@ -3,7 +3,7 @@ require_once __DIR__ . '/headers/header.php';
 ?>
 
 
-<script type='text/javascript' src='/public/assets/js/mojeTagi.js' defer></script>
+<script type='text/javascript' src='/public/assets/js/tagi.js' defer></script>
 <script type='text/javascript' src='/public/assets/js/colors.js' defer></script>
 
 
@@ -14,7 +14,11 @@ require_once __DIR__ . '/headers/header.php';
     <div class="content standard-content">
 
         <div class="sidebar">
-            sidebar-container
+
+
+
+
+
         </div>
 
         <div class="content-right">
@@ -78,6 +82,9 @@ require_once __DIR__ . '/headers/header.php';
 
                         <div class='tag-calosc' idTagu="<?= $t->id ?>" iloscUzyc="<?= $t->iloscUzyc ?>">
                             <div class='tag-header'>
+
+                                <div class='tag-color-box ' style="background-color:<?= $t->kolor ?>"> </div>
+
                                 <div class='tag-nazwa tag-col'><?= $t->nazwa ?></div>
                                 <div class='tag-aktywny tag-col'>
                                     <input type='checkbox' class='tag-aktywny-checkbox'
@@ -85,8 +92,8 @@ require_once __DIR__ . '/headers/header.php';
                                     <span class="tag-aktywny-span <?php if (!$t->aktywny) echo 'nieaktywny-tag'; ?>"/>aktywny</span>
                                 </div>
                                 <div class='tag-kolor tag-col'><?= $t->kolor ?></div>
-                                <div class="tag-color-box" style="background-color:<?= $t->kolor ?>"></div>
-                                <div class='bg-icon remove-tag' style="background-image: url(/src/img/trash-solid.svg);"></div>
+                                <div class='bg-icon remove-tag'
+                                     style="background-image: url(/src/img/trash-solid.svg);"></div>
                             </div>
                             <div class='dodaj-tag-bottom tag-opis'>
                                 <?= $t->opis ?>
@@ -104,20 +111,18 @@ require_once __DIR__ . '/headers/header.php';
     <template class="template-tag">
         <div class="tag-calosc">
             <div class="tag-header">
-                <div class="tag-nazwa tag-col">nazwa</div>
-                <div class="tag-aktywny tag-col">
-                    <input type='checkbox' class="tag-aktywny-checkbox">
-                    <span class="tag-aktywny-span <?php if (!$t->aktywny) echo 'nieaktywny-tag'; ?>">aktywny</span>
-                </div>
-                <div class="tag-kolor tag-col">kolor</div>
-
-
-                <div class='tag-color-box'"></div>
-                <div class='bg-icon remove-tag' style='background-image: url(/src/img/trash-solid.svg);'></div>
-
+                <div class='tag-color-box'
+                ">
             </div>
-            <div class="dodaj-tag-bottom tag-opis">
-                lorem ipsum
+            <div class="tag-nazwa tag-col"></div>
+            <div class="tag-aktywny tag-col">
+                <input type='checkbox' class="tag-aktywny-checkbox">
+                <span class="tag-aktywny-span echo 'nieaktywny-tag'; ?>"></span>
             </div>
+            <div class="tag-kolor tag-col"></div>
+            <div class='bg-icon remove-tag' style='background-image: url(/src/img/trash-solid.svg);'></div>
+
         </div>
-    </template>
+        <div class="dodaj-tag-bottom tag-opis"></div>
+</div>
+</template>

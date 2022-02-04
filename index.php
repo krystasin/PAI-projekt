@@ -27,6 +27,8 @@ require 'Routing.php';
     Routing::post('login', 'SecurityController');
     Routing::post('logout', 'SecurityController');
 
+    Routing::post('zarzadzajZakladami', 'AdminController');
+
 
 
     Routing::run($path);

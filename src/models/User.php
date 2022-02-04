@@ -2,10 +2,9 @@
 
 class User
 {
-    private $username;
-    private $email;
-    private $accountType;
-
+    private string $username;
+    private string $email;
+    private string $accountType;
 
 
     public function __construct(
@@ -18,38 +17,23 @@ class User
         $this->accountType = $accountType;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getUsername()
     {
         return $this->username;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getEmail()
     {
         return $this->email;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getAccountType()
     {
         return $this->accountType;
     }
 
 
-
-
-
-
-
-
-
-
-    
 }

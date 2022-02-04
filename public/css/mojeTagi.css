@@ -55,10 +55,19 @@
     height: 20px;
     border: 1px solid #777;
 }
+
 .tag-color-box{
-    width: 20px;
+    width: 30px;
     height: 20px;
+    -webkit-mask-image: url(/src/img/palette-solid.svg);
+    mask-image: url(/src/img/palette-solid.svg);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 20px;
+    mask-size: 20px;
 }
+
+
 
 
 .red {
@@ -126,6 +135,7 @@
     width: 438px;
     min-height: 60px;
     padding: 0 2px;
+    resize: none;
 }
 
 

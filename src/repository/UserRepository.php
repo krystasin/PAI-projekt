@@ -9,10 +9,7 @@ class UserRepository extends Repository
     private function getUserData( $con, int $id) :?User{
         // natural join public.accountTypes aT on uD.accountTypeId = aT.id
         //     $stmt = $this->database->connect()->prepare(
-        $stmt = $con->prepare(
-            'SELECT * FROM public.usersdata 
-                    WHERE id = :id');
-
+        $stmt = $con->prepare('SELECT * FROM usersdata NATURAL JOIN account_types WHERE id = :id');
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -25,7 +22,7 @@ class UserRepository extends Repository
         return new User(
             $result['username'],
             $result['email'],
-            $result['accountTypeID']
+            $result['accountType']
         );
     }
 

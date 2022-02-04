@@ -76,7 +76,7 @@
 }
 
 .col1{
-    min-width: 25rem;
+    min-width: 24rem;
 }
 .col2{
     width: auto;
@@ -90,6 +90,35 @@
 }
 .opis-std {
     color: #777;
+}
+
+
+
+
+.bg-icon-zaklad{
+    width:20px;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 12px;
+    mask-size: 12px;
+
+    -webkit-mask-position-y: 8px;
+    mask-position-y: 8px;
+}
+.bg-nierozstrzygnięty{
+    background-color: dimgray;
+    -webkit-mask-image: url('/src/img/question-circle-solid.svg');
+    mask-image: url('/src/img/question-circle-solid.svg');
+}
+.bg-wygrany{
+    background-color: green;
+    -webkit-mask-image: url('/src/img/check-solid.svg');
+    mask-image: url('/src/img/check-solid.svg');
+}
+.bg-przegrany{
+    background-color: red;
+    -webkit-mask-image: url('/src/img/times-solid.svg');
+    mask-image: url('/src/img/times-solid.svg');
 }
 
 
@@ -161,7 +190,6 @@
     display: flex;
     justify-content: space-between;
     border: none;
-    border-bottom: 1px solid #ccc;
     margin-bottom: 2px;
 }
 
@@ -173,7 +201,9 @@
 
 
 }
-
+.kupons-tags{
+    font-size: 12px;
+}
 
 
 .nowy-zaklad-form-podwojny-select{
@@ -182,17 +212,31 @@
 }
 
 
-.dodajNowyZakladPrzycisk:hover, .dodaj-kolejny-zaklad-przycisk:hover, .usun-zaklad-przycisk:hover{
+.dodajNowyKuponPrzycisk:hover, .dodaj-kolejny-zaklad-przycisk:hover, .usun-zaklad-przycisk:hover{
     cursor: grab;
 }
-.dodajNowyZakladPrzycisk{
-    border: 1px solid #ccc;
+.dodajNowyKuponPrzycisk{
+    border: 1px solid #555;
     font-size: 30px;
-    margin: 12px 0 0 0px;
+    width: 13.5rem;
+    margin: 12px 0 0 31.5rem;
+
+    padding: 3px 45px 2px 4px ;
+    background-image: url('/src/img/plus-square-solid.svg');
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: 40px;
+    border-radius:6px;
 }
-.dodajNowyZakladPrzycisk .text{
+.dodajNowyKuponPrzycisk-text{
     font-size: 30px;
+    font-family: Helvetica, sans-serif;
+
 }
+
+
+
+
 .dodaj-kolejny-zaklad-przycisk{
     width: 30px;
     font-size: 30px;
@@ -267,12 +311,15 @@ border-bottom: 1px solid black;
 
 
 .wygrany{
-    color: limegreen;
+    color: #229922;
+    text-shadow: 0 1px black;
 }
 .przegrany{
     color: red;
+    text-shadow: 0 1px black;
 }
 .nierozstrzygnięty{
     color: gray;
+    text-shadow: 0 1px black;
 }
 

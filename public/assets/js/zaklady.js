@@ -169,6 +169,7 @@ function createKupon(kupon_obj, czyNaPoczatku) {
 
     const kupon = template.content.children[0].cloneNode(true);
     kupon.setAttribute("id", "kupon-" + kupon_obj.id);
+    kupon.setAttribute("idkuponu",  kupon_obj.id);
 
     let header = kupon.querySelector(".kupon-header");
     header.querySelector(".kupon-id").innerHTML = "#" + kupon_obj.id;

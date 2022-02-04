@@ -5,7 +5,7 @@
     <?php require_once __DIR__ . '/static/navigation.php';
     setlocale(LC_MONETARY, 'Polish');
     ?>
-    <script type="text/javascript" src="/public/assets/js/mojeZaklady.js" defer></script>
+    <script type="text/javascript" src="/public/assets/js/zaklady.js" defer></script>
     <script type="text/javascript" src="/public/assets/js/zakladyFiltr.js" defer></script>
 
 
@@ -80,10 +80,33 @@
         <div class="sidebar">
             <input type="text" class="filtr-text s-bar-inp">
             <div class="filtr-row">
-                Od: <input type="datetime-local" class="datetime-query datetime-start s-bar-inp">
+                <span class='text-font'>Od:</span>
+                <input type="datetime-local" class="datetime-query datetime-start s-bar-inp">
             </div>
             <div class="filtr-row">
-                Do: <input type='datetime-local' class="datetime-query datetime-end s-bar-inp ">
+                <span class="text-font">Do:</span>
+                <input type='datetime-local' class="datetime-query datetime-end s-bar-inp ">
+            </div>
+            <div class="filtr-tags text-font">
+            Tagi (requied / and):
+                <?php
+                foreach ($metaData['tagi'] as $t) { ?>
+                    <div class='filtr-row filtr-row-tag'>
+                        <input type="checkbox" value="<?=$t['tag_id']?>" name="<?=$t['nazwa']?>" class="z-filtr-tag-checkbox">
+                        <label for="<?=$t['tag_id']?>"><?=$t['nazwa']?></label>
+                    </div>
+                <?php } ?>
+            </div>
+
+            <div class="filtr-status text-font">
+            Status Kuponu (or):
+                <?php
+                foreach ($metaData['status'] as $s) { ?>
+                    <div class='filtr-row filtr-row-tag'>
+                        <input type="checkbox" name="<?=$s['status']?>" value="<?=$s['status_id']?>" class="z-filtr-status-checkbox"  checked>
+                        <label for="<?=$s['status_id']?>"><?=$s['status']?></label>
+                    </div>
+                <?php } ?>
             </div>
 
         </div>
@@ -126,9 +149,9 @@
                     <i class="fas fa-plus-square dodaj-kolejny-zaklad-przycisk" style="display: none;"></i>
                 </div>
 
-                <div class="dodajNowyZakladPrzycisk">
-                    <i class="fas fa-plus-square"></i>
-                    <span class="text">dodaj nowy zakład</span>
+                <div class="dodajNowyKuponPrzycisk">
+                    <span class="dodajNowyKuponPrzycisk-text">dodaj kupon</span>
+                    <!--       <i class="fas fa-plus-square nk-fas"></i>-->
                 </div>
             </div>
 
@@ -159,19 +182,23 @@
                                 <div class="kupon-mid-L">
                                     <?php foreach ($kupon->zaklady as $z) { ?>
                                         <div class="zaklad">
-                                            <div class="zaklad-column col1">
-                                                <div class="zaklad-properties druzyny"><?= $z->gospodarz ?>
-                                                    -<?= $z->gosc ?></div>
-                                                <div class="zaklad-properties bet"><?= $z->rodzajZakladu . "&nbsp;-&nbsp;" . $z->wartoscZakladu ?></div>
-                                            </div>
-                                            <div class="zaklad-column col2">
-                                                <div class="zaklad-properties data-meczu"><?= $z->dataMeczu->format('Y-m-d H:i'); ?></div>
-                                                <div class="zaklad-properties zakladu-kurs"><span
-                                                            class="opis-std">kurs:</span>
-                                                    <span class='kurs-val'><?= $z->kurs ?></span></div>
-                                            </div>
+
+                                        <div class='zaklad-column col0 bg-icon-zaklad bg-<?= $z->status ?>'></div>
+                                        <div class="zaklad-column col1">
+
+                                            <div class="zaklad-properties druzyny">
+                                                <?= $z->gospodarz ?>-<?= $z->gosc ?></div>
+                                            <div class="zaklad-properties bet"><?= $z->rodzajZakladu . "&nbsp;-&nbsp;" . $z->wartoscZakladu ?></div>
                                         </div>
-                                    <?php } ?>
+                                        <div class="zaklad-column col2">
+                                            <div class="zaklad-properties data-meczu"><?= $z->dataMeczu->format('Y-m-d H:i'); ?></div>
+                                            <div class="zaklad-properties zakladu-kurs"><span
+                                                        class="opis-std">kurs:</span>
+                                                <span class='kurs-val'><?= $z->kurs ?></span></div>
+                                        </div>
+                                        </div><?php
+
+                                    } ?>
                                 </div>
                                 <div class='kupon-mid-R'>
                                     <div class='zaklad-column col3'>
@@ -245,6 +272,9 @@
 
     <template id="zaklad-template">
         <div class="zaklad">
+
+            <div class='zaklad-column col0 bg-icon-zaklad '></div>
+
             <div class="zaklad-column col1">
                 <div class="zaklad-properties druzyny"></div>
                 <div class="zaklad-properties bet"></div>

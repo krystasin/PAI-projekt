@@ -25,7 +25,6 @@ class SecurityController extends AppController
             return $this->render('login', ['title' => 'Strona główna', 'styles' => ['loggedOutStyle', 'style']]);
 
 
-
         $userRepository = new UserRepository();
         $user = $userRepository->getUser($_POST['login'], $_POST['password']);
 
@@ -35,8 +34,17 @@ class SecurityController extends AppController
 
         $_SESSION['user'] = $user->getUsername();
 
-        $url = "http://$_SERVER[HTTP_HOST]";
-        header("Location: {$url}/mojeZaklady");
+        if ($user->getAccountType() === "user") {
+
+            $url = "http://$_SERVER[HTTP_HOST]";
+            header("Location: {$url}/mojeZaklady");
+        }
+        else if ($user->getAccountType() === 'admin') {
+
+            $url = "http://$_SERVER[HTTP_HOST]";
+            header("Location: {$url}/zarzadzajZakladami_admin");
+        }
+
 
     }
 
@@ -50,23 +58,24 @@ class SecurityController extends AppController
     }
 
 
-    public function registerBG() {
+    public function registerBG()
+    {
 
         $this->ifPost();
 
         die("AAAAAAAAAA");
-/*        $Name = $_POST['Name'];
-        $Surname = $_POST['Surname'];
-        $Email = $_POST['Email'];
-        $Username = $_POST['Username'];
-        $Password = $_POST['Password'];
+        /*        $Name = $_POST['Name'];
+                $Surname = $_POST['Surname'];
+                $Email = $_POST['Email'];
+                $Username = $_POST['Username'];
+                $Password = $_POST['Password'];
 
-        //GroupID === 2 -> student, 1 for teachers
-        $user = new Users(0,1, $Name, md5(md5($Surname)), $Email, $Username, $Password);
+                //GroupID === 2 -> student, 1 for teachers
+                $user = new Users(0,1, $Name, md5(md5($Surname)), $Email, $Username, $Password);
 
-        $this->userRepository->register($user);
+                $this->userRepository->register($user);
 
-        return $this->render('login', ['messages' => ["Successfully registered!<br/> Now you can login"]]);*/
+                return $this->render('login', ['messages' => ["Successfully registered!<br/> Now you can login"]]);*/
 
     }
 

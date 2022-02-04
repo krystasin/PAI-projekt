@@ -13,6 +13,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    min-width: 820px;
 }
 .standard-content{
     display: flex;
@@ -20,7 +21,6 @@
 }
 
 .content{
-    min-width: 820px;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -65,5 +65,11 @@ a{
     background-color: #181818 ;
 
     color: white !important;
+}
 
+.display-NONE{
+    display: none !important;
+}
+.display-FLEX{
+    display: flex !important;
 }
