@@ -1,3 +1,9 @@
+.wszystkieKupony{
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    align-items: stretch;
+}
 .kupon{
     font-size: 15px;
     border: 1px solid rgb(87, 81, 81);

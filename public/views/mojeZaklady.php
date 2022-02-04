@@ -6,6 +6,7 @@
     setlocale(LC_MONETARY, 'Polish');
     ?>
     <script type="text/javascript" src="/public/assets/js/mojeZaklady.js" defer></script>
+    <script type="text/javascript" src="/public/assets/js/zakladyFiltr.js" defer></script>
 
 
     <?php
@@ -73,139 +74,143 @@
 
     <?php } ?>
 
-    <content>
 
-        <div class="standard-content">
+    <div class="content standard-content">
 
-            <div class="sidebar">
-                MAIIN-sidebar-container
+        <div class="sidebar">
+            <input type="text" class="filtr-text s-bar-inp">
+            <div class="filtr-row">
+                Od: <input type="datetime-local" class="datetime-query datetime-start s-bar-inp">
             </div>
-
-
-            <div class="content-right">
-
-                <div class="noway-zaklad-all">
-                    <div class="dodajNowyZaklad">
-                        <form class="nowy-zaklad-form" method="post" style="display: none;">
-                            <div id="form-header">
-                                <div class="form-header-col stawka-div">
-                                    <lebel class="label-stawka">stawka:</lebel>
-                                    <input name="stawka" type="number" step='0.01' value='1.00' class="input-stawka">
-                                </div>
-
-                                <div class="form-header-col tags-div">
-                                    <p class="form-tags-text">dodaj tagi<i class='fas fa-caret-down'></i></p>
-                                    <div class="form-tags-all-checkboxs">
-                                        <?php foreach ($metaData['tagi'] as $tag) { ?>
-                                            <p class="form-tag-p">
-                                                <input class="checkbox-tag" type='checkbox'
-                                                       name='<?= $tag['nazwa'] ?>'
-                                                       id='<?= $tag['nazwa'] ?>'
-                                                       value='<?= $tag['tag_id'] ?>'>
-                                                <label for="<?= $tag['nazwa'] ?>"><?= $tag['nazwa'] ?></label>
-                                            </p>
-                                        <?php } ?>
-                                    </div>
-
-                                </div>
-                                <div class="form-header-col nowy-zaklad-button-div">
-                                    <button type="button" class="nowy-zaklad-button">dodaj
-                                        zakład
-                                    </button>
-                                </div>
-                            </div>
-
-                        </form>
-                        <i class="fas fa-plus-square dodaj-kolejny-zaklad-przycisk" style="display: none;"></i>
-                    </div>
-
-                    <div class="dodajNowyZakladPrzycisk">
-                        <i class="fas fa-plus-square"></i>
-                        <span class="text">dodaj nowy zakład</span>
-                    </div>
-                </div>
-
-
-                <!-- WSZYSTKI KUPONY POCZĄTEK -->
-                <!-- WSZYSTKI KUPONY POCZĄTEK -->
-                <!-- WSZYSTKI KUPONY POCZĄTEK -->
-
-
-                <div class="wszystkieKupony">
-
-                    <?php //wypiszanie wszystkich kuponów
-                    if (isset($kupony)) {
-                        $last = $kupony[0]->id;
-
-                        foreach ($kupony as $kupon) {
-                            ?>
-                            <div class="kupon" idKuponu="<?= $kupon->id ?>" id=kupon-<?= $kupon->id ?>">
-                                <div class="kupon-header">
-                                    <div class="kupon-properties kupon-id x-c-1">#<?= $kupon->id ?></div>
-                                    <div class="kupon-properties data-obstawienia x-c-2"><?= $kupon->dataObstawienia->format('Y-m-d H:i'); ?></div>
-                                    <div class="kupon-properties status x-c-3">
-                                        <span class="opis-std <?= $kupon->status ?>"> <?= $kupon->status ?></span>
-                                    </div>
-                                </div>
-
-                                <div class="kupon-mid">
-                                    <div class="kupon-mid-L">
-                                        <?php foreach ($kupon->zaklady as $z) { ?>
-                                            <div class="zaklad">
-                                                <div class="zaklad-column col1">
-                                                    <div class="zaklad-properties druzyny"><?= $z->gospodarz ?>
-                                                        -<?= $z->gosc ?></div>
-                                                    <div class="zaklad-properties bet"><?= $z->rodzajZakladu . "&nbsp;-&nbsp;" . $z->wartoscZakladu ?></div>
-                                                </div>
-                                                <div class="zaklad-column col2">
-                                                    <div class="zaklad-properties data-meczu"><?= $z->dataMeczu->format('Y-m-d H:i'); ?></div>
-                                                    <div class="zaklad-properties zakladu-kurs"><span class="opis-std">kurs:</span>
-                                                        <span class='kurs-val'><?= $z->kurs ?></span></div>
-                                                </div>
-                                            </div>
-                                        <?php } ?>
-                                    </div>
-                                    <div class='kupon-mid-R'>
-                                        <div class='zaklad-column col3'>
-                                            <div class="add-tag"><i class="fa-solid fa-square-plus"></i>dodaj tag</div>
-                                            <div class='kupons-tags'>
-                                                <?php foreach ($kupon->getTags() as $tag) { ?>
-                                                    <p class="kupon-p-tag"
-                                                       style="color: <?= $tag->getKolor() ?>"><?= $tag->getNazwa() ?></p> <?php } ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="kupon-bottom">
-                                    <div class="kupon-properties stawka x-c-1"><span
-                                                class="opis-std ">stawka:</span><?= $kupon->stawka ?></div>
-                                    <div class="kupon-properties kus x-c-2"><span
-                                                class="opis-std ">kurs: </span><?= round($kupon->kurs, 2) ?></div>
-                                    <div class="kupon-properties x-c-3"><span
-                                                class="opis-std ">potencjalna wygrana:</span>
-                                        $<?= number_format(($z->kurs * floatval(substr($kupon->stawka, 1))), 2, ",", " ") ?>
-                                    </div>
-                                </div>
-                            </div>
-                            <?php
-                        }
-                    }
-                    ?>
-
-                </div>
-
-                <div class="load-more">
-                    load more
-                </div>
-
+            <div class="filtr-row">
+                Do: <input type='datetime-local' class="datetime-query datetime-end s-bar-inp ">
             </div>
 
         </div>
 
 
-    </content>
+        <div class="content-right">
+
+            <div class="noway-zaklad-all">
+                <div class="dodajNowyZaklad">
+                    <form class="nowy-zaklad-form" method="post" style="display: none;">
+                        <div id="form-header">
+                            <div class="form-header-col stawka-div">
+                                <lebel class="label-stawka">stawka:</lebel>
+                                <input name="stawka" type="number" step='0.01' value='1.00' class="input-stawka">
+                            </div>
+
+                            <div class="form-header-col tags-div">
+                                <p class="form-tags-text">dodaj tagi<i class='fas fa-caret-down'></i></p>
+                                <div class="form-tags-all-checkboxs">
+                                    <?php foreach ($metaData['tagi'] as $tag) { ?>
+                                        <p class="form-tag-p">
+                                            <input class="checkbox-tag" type='checkbox'
+                                                   name='<?= $tag['nazwa'] ?>'
+                                                   id='<?= $tag['nazwa'] ?>'
+                                                   value='<?= $tag['tag_id'] ?>'>
+                                            <label for="<?= $tag['nazwa'] ?>"><?= $tag['nazwa'] ?></label>
+                                        </p>
+                                    <?php } ?>
+                                </div>
+
+                            </div>
+                            <div class="form-header-col nowy-zaklad-button-div">
+                                <button type="button" class="nowy-zaklad-button">dodaj
+                                    zakład
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                    <i class="fas fa-plus-square dodaj-kolejny-zaklad-przycisk" style="display: none;"></i>
+                </div>
+
+                <div class="dodajNowyZakladPrzycisk">
+                    <i class="fas fa-plus-square"></i>
+                    <span class="text">dodaj nowy zakład</span>
+                </div>
+            </div>
+
+
+            <!-- WSZYSTKI KUPONY POCZĄTEK -->
+            <!-- WSZYSTKI KUPONY POCZĄTEK -->
+            <!-- WSZYSTKI KUPONY POCZĄTEK -->
+
+
+            <div class="wszystkieKupony">
+
+                <?php //wypiszanie wszystkich kuponów
+                if (isset($kupony)) {
+                    $last = $kupony[0]->id;
+
+                    foreach ($kupony as $kupon) {
+                        ?>
+                        <div class="kupon" idKuponu="<?= $kupon->id ?>" id=kupon-<?= $kupon->id ?>">
+                            <div class="kupon-header">
+                                <div class="kupon-properties kupon-id x-c-1">#<?= $kupon->id ?></div>
+                                <div class="kupon-properties data-obstawienia x-c-2"><?= $kupon->dataObstawienia->format('Y-m-d H:i'); ?></div>
+                                <div class="kupon-properties status x-c-3">
+                                    <span class="opis-std <?= $kupon->status ?>"> <?= $kupon->status ?></span>
+                                </div>
+                            </div>
+
+                            <div class="kupon-mid">
+                                <div class="kupon-mid-L">
+                                    <?php foreach ($kupon->zaklady as $z) { ?>
+                                        <div class="zaklad">
+                                            <div class="zaklad-column col1">
+                                                <div class="zaklad-properties druzyny"><?= $z->gospodarz ?>
+                                                    -<?= $z->gosc ?></div>
+                                                <div class="zaklad-properties bet"><?= $z->rodzajZakladu . "&nbsp;-&nbsp;" . $z->wartoscZakladu ?></div>
+                                            </div>
+                                            <div class="zaklad-column col2">
+                                                <div class="zaklad-properties data-meczu"><?= $z->dataMeczu->format('Y-m-d H:i'); ?></div>
+                                                <div class="zaklad-properties zakladu-kurs"><span
+                                                            class="opis-std">kurs:</span>
+                                                    <span class='kurs-val'><?= $z->kurs ?></span></div>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class='kupon-mid-R'>
+                                    <div class='zaklad-column col3'>
+                                        <div class="add-tag"><i class="fa-solid fa-square-plus"></i>dodaj tag</div>
+                                        <div class='kupons-tags'>
+                                            <?php foreach ($kupon->getTags() as $tag) { ?>
+                                                <p class="kupon-p-tag"
+                                                   style="color: <?= $tag->getKolor() ?>"><?= $tag->getNazwa() ?></p> <?php } ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="kupon-bottom">
+                                <div class="kupon-properties stawka x-c-1"><span
+                                            class="opis-std ">stawka:</span><?= $kupon->stawka ?></div>
+                                <div class="kupon-properties kus x-c-2"><span
+                                            class="opis-std ">kurs: </span><?= round($kupon->kurs, 2) ?></div>
+                                <div class="kupon-properties x-c-3"><span
+                                            class="opis-std ">potencjalna wygrana:</span>
+                                    $<?= number_format(($z->kurs * floatval(substr($kupon->stawka, 1))), 2, ",", " ") ?>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                }
+                ?>
+
+            </div>
+
+            <div class="load-more">
+                load more
+            </div>
+
+        </div>
+
+    </div>
 
 
     <!-- TEMPLATES -->

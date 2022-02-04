@@ -1,0 +1,30 @@
+
+.sidebar{
+    display: flex;
+    flex-direction: column;
+    min-width: 220px;
+    height: 300px;
+    padding:20px 10px;
+
+    border-right: 1px solid black;
+}
+.s-bar-inp{
+    margin-top: 12px;
+}
+
+
+.filtr-text:focus{
+    outline: none;
+
+}
+.filtr-text{
+    padding: 3px 1px;
+}
+
+.filtr-row{
+    display: flex;
+    align-items: flex-end
+}
+.datetime-query {
+    margin-left: 3px;
+}

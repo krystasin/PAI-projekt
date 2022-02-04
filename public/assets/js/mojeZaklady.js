@@ -64,7 +64,6 @@ function dodajNowyZakladDoForm() {
             })
             sel.options[i].hidden = !czyZawiera;
             sel.options[i].disabled = !czyZawiera;
-            console.log(sel.options[i].innerText, !czyZawiera);
         }
 
 

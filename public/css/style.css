@@ -3,7 +3,6 @@
     padding: 0;
     box-sizing: border-box;
 
-    font-family: Helvetica, sans-serif;
 
 }
 
@@ -15,11 +14,11 @@
     flex-direction: column;
     justify-content: space-between;
 }
-
 .standard-content{
     display: flex;
     flex-direction: row;
 }
+
 .content{
     min-width: 820px;
     display: flex;
@@ -27,15 +26,17 @@
     align-items: flex-start;
     justify-content: space-between;
     flex: 1 1 auto;
+
+    align-items: stretch;
 }
-.sidebar{
-    display: flex;
-    min-width: 220px;
-    height: 400px;
-    border-right: 1px solid black;
-}
+
 .content-right{
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    align-items: stretch;
     width: 100%;
+
     /*padding-left: 25px;*/
 
 }
