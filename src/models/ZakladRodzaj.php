@@ -19,5 +19,13 @@ class ZakladRodzaj
         array_push($this->wartosci, new ZakladWartosc($id, $wartosc));
     }
 
+    public function __toString(): string
+    {
+        return "{
+            'id':$this->id,
+            'rodzaj':$this->rodzaj,
+            'wartosci':".json_encode($this->wartosci)."}";
+    }
+
 
 }

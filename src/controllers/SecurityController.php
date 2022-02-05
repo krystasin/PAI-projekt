@@ -42,7 +42,7 @@ class SecurityController extends AppController
         else if ($user->getAccountType() === 'admin') {
 
             $url = "http://$_SERVER[HTTP_HOST]";
-            header("Location: {$url}/zarzadzajZakladami_admin");
+            header("Location: {$url}/zarzadzajZakladami");
         }
 
 
