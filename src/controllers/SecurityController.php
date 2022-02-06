@@ -38,8 +38,7 @@ class SecurityController extends AppController
 
             $url = "http://$_SERVER[HTTP_HOST]";
             header("Location: {$url}/mojeZaklady");
-        }
-        else if ($user->getAccountType() === 'admin') {
+        } else if ($user->getAccountType() === 'admin') {
 
             $url = "http://$_SERVER[HTTP_HOST]";
             header("Location: {$url}/zarzadzajZakladami");
@@ -61,22 +60,54 @@ class SecurityController extends AppController
     public function registerBG()
     {
 
-        $this->ifPost();
+        $repo = new UserRepository();
+        if (!$this->isPost())
+            return $this->render('login');
 
-        die("AAAAAAAAAA");
-        /*        $Name = $_POST['Name'];
-                $Surname = $_POST['Surname'];
-                $Email = $_POST['Email'];
-                $Username = $_POST['Username'];
-                $Password = $_POST['Password'];
 
-                //GroupID === 2 -> student, 1 for teachers
-                $user = new Users(0,1, $Name, md5(md5($Surname)), $Email, $Username, $Password);
+        $login = $_POST['login'];
+        $email = $_POST['email'];
+        $username = $_POST['username'];
+        $password = $_POST['password'];
 
-                $this->userRepository->register($user);
 
-                return $this->render('login', ['messages' => ["Successfully registered!<br/> Now you can login"]]);*/
+        $user = new User($login, md5($password), $username, $email, 'user');
 
+        $repo->register($user);
+        $_SESSION['user'] = $user->getUsername();
+
+
+        $url = "http://$_SERVER[HTTP_HOST]";
+        header("Location: {$url}/mojeZaklady");
+
+
+    }
+
+
+    public function isLoginAvailable()
+    {
+        $contentType = isset($_SERVER['CONTENT_TYPE']) ? trim($_SERVER['CONTENT_TYPE']) : '';
+        if ($contentType === 'application/json') {
+            $repo = new UserRepository();
+            $content = trim(file_get_contents('php://input'));
+            $decoded = json_decode($content, true);
+            header('Content-type: application/json');
+            http_response_code(200);
+            echo json_encode($repo->isLoginAvailable($decoded['login']));
+        }
+    }
+
+    public function isEmailAvailable()
+    {
+        $contentType = isset($_SERVER['CONTENT_TYPE']) ? trim($_SERVER['CONTENT_TYPE']) : '';
+        if ($contentType === 'application/json') {
+            $repo = new UserRepository();
+            $content = trim(file_get_contents('php://input'));
+            $decoded = json_decode($content, true);
+            header('Content-type: application/json');
+            http_response_code(200);
+            echo json_encode($repo->isEmailAvailable($decoded['email']));
+        }
     }
 
 }

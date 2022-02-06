@@ -26,6 +26,9 @@ require 'Routing.php';
 
     Routing::post('login', 'SecurityController');
     Routing::post('logout', 'SecurityController');
+    Routing::post('registerBG', 'SecurityController');
+    Routing::post('isEmailAvailable', 'SecurityController');
+    Routing::post('isLoginAvailable', 'SecurityController');
 
     Routing::post('zarzadzajZakladami', 'AdminController');
     Routing::post('a_zmienWartoscZakladu', 'AdminController');
