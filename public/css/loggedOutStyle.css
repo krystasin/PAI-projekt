@@ -52,13 +52,15 @@
     display: flex;
     width: 220px;
     margin: 15px auto 25px auto;
+    padding-left: 24px;
     border-bottom: 1px solid #666;
 }
 .login-input{
-    margin-left: 24px;
-    padding: 8px 0 1px 0;
+    padding: 8px 0 3px 0;
     font-size:larger;
     border: none;
+    font-size: 16px;
+    width: 200px;
 }
 .login-input:focus{
     outline: none;
