@@ -4,6 +4,7 @@
 require_once 'AppController.php';
 require_once __DIR__ . '/../helpers/LoginMenager.php';
 require_once __DIR__ . '/../repository/DataRepository.php';
+require_once __DIR__ . '/../repository/StitiscticsRepository.php';
 
 class DefaultController extends AppController
 {
@@ -41,7 +42,11 @@ class DefaultController extends AppController
 
     public function statystyki()
     {
-        $this->render('statystyki', ['title' => 'Statystyki']);
+        $statsRepo = new StitiscticsRepository();
+        $statystyki = $statsRepo->getStandardStatistics($_SESSION['user']);
+
+
+        $this->render('statystyki', ['title' => 'Statystyki', 'statystyki' => $statystyki]);
 
     }
 

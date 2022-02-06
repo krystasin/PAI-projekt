@@ -1,0 +1,142 @@
+.statystyka {
+    border: 1px solid black;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    min-width: 1000px;
+}
+
+.statystyka-head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #eee;
+    border-bottom: 1px solid #777;
+}
+
+.stat-head-left > *, .stat-head-right > * {
+    padding: 10px;
+}
+
+.stat-head-right, .stat-head-left {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.stat-liczby {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+.stat-wygrany {
+    color: green;
+}
+
+.stat-przegrany {
+    color: red;
+}
+
+.stat-nierozstrzygniety {
+    color: #666;
+}
+
+.bold500 {
+    font-weight: bold;
+}
+
+.zwin-rozwnin:hover {
+    cursor: pointer;
+}
+
+.zwin-rozwnin {
+
+    background-image: url(/src/img/chevron-circle-down-solid.svg);
+    background-repeat: no-repeat;
+    background-position: 0 10px;
+    margin: 0 10px;
+
+}
+/*    stat-opisy  */
+/*    stat-opisy  */
+/*    stat-opisy  */
+.stat-opisy{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.stat-opisy > *{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    color: #999 !important;
+}
+
+
+/*  statystyka-body */
+/*  statystyka-body */
+/*  statystyka-body */
+
+.statystyka-body > *{
+    padding: 3px 0;
+}
+
+.loading {
+    width: 50px;
+    margin: 0 auto;
+}
+
+.stat-zaklad {
+    display: flex;
+    flex-direction: row;
+}
+.stat-zaklad > *{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+.stat-id {
+    width: 5%;
+}
+
+.stat-data {
+    width: 15%;
+    font-size: 14px;
+    color: #333;
+    align-items: center;
+}
+
+.stat-gospodarz{
+    width: 25%;
+
+}
+.stat-pausa{
+     align-items: center;
+     width: 1%;
+ }
+.stat-gosc{
+    width: 25%;
+    align-items: flex-start;
+
+}
+.stat-zaklad-wartosc{
+    width: 20%;
+    align-items: flex-start;
+}
+.stat-kurs{
+    margin-right: 1%;
+    width: 8%;
+
+}
+
+
+
+
+
+
+

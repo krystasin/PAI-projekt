@@ -48,7 +48,7 @@ class User
         return $this->email;
     }
 
-    public function accountTypeId(): string
+    public function getAccountType(): string
     {
         return $this->accountType;
     }

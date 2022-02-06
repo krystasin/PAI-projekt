@@ -17,6 +17,7 @@ require 'Routing.php';
 
     Routing::post('dodajZaklad', 'DataController');
     Routing::post('loadMoreKupons', 'DataController');
+    Routing::post('pobierzWybraneZaklady', 'DataController');
 
     Routing::get('mojeTagi', 'TagController');
     Routing::get('dodajTag', 'TagController');

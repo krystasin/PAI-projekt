@@ -19,13 +19,15 @@ class UserRepository extends Repository
             return null;
         }
 
-        return new User(
+         $user = new User(
             $result['login'],
             $result['password'],
             $result['username'],
             $result['email'],
             $result['accountType']
         );
+
+        return $user;
     }
 
     public function getUser( string $login, string $password): ?User

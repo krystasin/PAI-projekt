@@ -3,6 +3,7 @@ require_once 'AppController.php';
 
 require_once __DIR__ . '/../helpers/LoginMenager.php';
 require_once(__DIR__ . '/../repository/DataRepository.php');
+require_once(__DIR__ . '/../repository/StitiscticsRepository.php');
 
 
 class DataController extends AppController
@@ -42,6 +43,22 @@ class DataController extends AppController
             header('Content-type: application/json');
             http_response_code(200);
             echo json_encode( $this->dataRepo->loadMoreKupons($decoded['lastID'], $_SESSION['user']));
+        }
+
+    }
+
+    public function pobierzWybraneZaklady()
+    {
+
+        $contentType = isset($_SERVER['CONTENT_TYPE']) ? trim($_SERVER['CONTENT_TYPE']) : '';
+        if ($contentType === "application/json") {
+
+            $statsRepo = new StitiscticsRepository();
+            $content = trim(file_get_contents("php://input"));
+            $decoded = json_decode($content, true);
+            header('Content-type: application/json');
+            http_response_code(200);
+            echo json_encode( $statsRepo->pobierzWybraneZaklady($decoded['id'], $decoded['userId']));
         }
 
     }
