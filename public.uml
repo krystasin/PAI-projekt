@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.SCHEMA:d7fb2plf2a3uq.public</OriginalElement>
+  <nodes>
+    <node x="155.0" y="764.0">3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.druzyny</node>
+    <node x="1265.25" y="624.0">3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.ttt</node>
+    <node x="187.0" y="151.0">3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.tagi</node>
+    <node x="399.0" y="173.0">3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.kupony</node>
+    <node x="607.0" y="206.0">3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public._status</node>
+    <node x="669.25" y="624.0">3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.test</node>
+    <node x="0.0" y="173.0">3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.usersdata</node>
+    <node x="840.25" y="624.0">3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public._tagi_zastosowanie</node>
+    <node x="318.5948275862069" y="445.5">3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.kupony_tagi</node>
+    <node x="0.0" y="624.0">3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public._panstwa</node>
+    <node x="1334.0" y="151.5">3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.VIEW:d7fb2plf2a3uq.public.statystyka_poprzez_rodzaj_zakladu</node>
+    <node x="1054.25" y="624.0">3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.account_types</node>
+    <node x="458.25" y="624.0">3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.VIEW:d7fb2plf2a3uq.public.wszystkie_kupony</node>
+    <node x="930.0" y="151.5">3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.VIEW:d7fb2plf2a3uq.public.s1</node>
+    <node x="654.344827586207" y="390.0">3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.zaklady</node>
+    <node x="748.0" y="206.0">3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public._zaklady_rodzaje</node>
+    <node x="1142.0" y="195.0">3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public._zaklady_wartosci</node>
+    <node x="128.50000000000003" y="904.0">3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.mecze</node>
+    <node x="479.6034482758621" y="0.0">3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.users</node>
+    <node x="0.0" y="753.0">3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public._ligi</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.zaklady" target="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public._status" relationship="REFERENCES">
+      <point x="-21.5" y="-94.5" />
+      <point x="718.844827586207" y="360.0" />
+      <point x="667.5" y="360.0" />
+      <point x="0.0" y="39.5" />
+    </edge>
+    <edge source="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.kupony_tagi" target="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.kupony" relationship="REFERENCES">
+      <point x="30.75" y="-39.0" />
+      <point x="410.8448275862069" y="370.0" />
+      <point x="493.0" y="370.0" />
+      <point x="0.0" y="72.5" />
+    </edge>
+    <edge source="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.zaklady" target="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public._zaklady_wartosci" relationship="REFERENCES">
+      <point x="64.5" y="-94.5" />
+      <point x="804.844827586207" y="370.0" />
+      <point x="1228.0" y="370.0" />
+      <point x="0.0" y="50.5" />
+    </edge>
+    <edge source="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.usersdata" target="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.users" relationship="REFERENCES">
+      <point x="0.0" y="-72.5" />
+      <point x="83.5" y="121.0" />
+      <point x="517.8534482758621" y="121.0" />
+      <point x="-38.25" y="50.5" />
+    </edge>
+    <edge source="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.VIEW:d7fb2plf2a3uq.public.s1" target="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.users" relationship="REFERENCES">
+      <point x="0.0" y="-94.0" />
+      <point x="1026.0" y="131.0" />
+      <point x="759.5" y="131.0" />
+      <point x="759.5" y="121.0" />
+      <point x="594.3534482758621" y="121.0" />
+      <point x="38.25" y="50.5" />
+    </edge>
+    <edge source="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.mecze" target="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.druzyny" relationship="REFERENCES">
+      <point x="-2.8421709430404007E-14" y="-72.5" />
+      <point x="208.0" y="879.0" />
+      <point x="194.75" y="879.0" />
+      <point x="-39.75" y="39.5" />
+    </edge>
+    <edge source="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public._ligi" target="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public._panstwa" relationship="REFERENCES">
+      <point x="0.0" y="-50.5" />
+      <point x="0.0" y="39.5" />
+    </edge>
+    <edge source="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.VIEW:d7fb2plf2a3uq.public.statystyka_poprzez_rodzaj_zakladu" target="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.users" relationship="REFERENCES">
+      <point x="0.0" y="-94.0" />
+      <point x="1472.5" y="131.0" />
+      <point x="759.5" y="131.0" />
+      <point x="759.5" y="121.0" />
+      <point x="594.3534482758621" y="121.0" />
+      <point x="38.25" y="50.5" />
+    </edge>
+    <edge source="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.mecze" target="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public._ligi" relationship="REFERENCES">
+      <point x="-53.00000000000003" y="-72.5" />
+      <point x="155.0" y="879.0" />
+      <point x="67.5" y="879.0" />
+      <point x="0.0" y="50.5" />
+    </edge>
+    <edge source="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.zaklady" target="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public._zaklady_rodzaje" relationship="REFERENCES">
+      <point x="21.5" y="-94.5" />
+      <point x="761.844827586207" y="360.0" />
+      <point x="829.0" y="360.0" />
+      <point x="0.0" y="39.5" />
+    </edge>
+    <edge source="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.kupony" target="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.users" relationship="REFERENCES">
+      <point x="0.0" y="-72.5" />
+      <point x="493.0" y="131.0" />
+      <point x="759.5" y="131.0" />
+      <point x="759.5" y="121.0" />
+      <point x="594.3534482758621" y="121.0" />
+      <point x="38.25" y="50.5" />
+    </edge>
+    <edge source="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.zaklady" target="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.kupony" relationship="REFERENCES">
+      <point x="-64.5" y="-94.5" />
+      <point x="675.844827586207" y="370.0" />
+      <point x="493.0" y="370.0" />
+      <point x="0.0" y="72.5" />
+    </edge>
+    <edge source="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.tagi" target="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.users" relationship="REFERENCES">
+      <point x="0.0" y="-94.5" />
+      <point x="283.0" y="131.0" />
+      <point x="759.5" y="131.0" />
+      <point x="759.5" y="121.0" />
+      <point x="594.3534482758621" y="121.0" />
+      <point x="38.25" y="50.5" />
+    </edge>
+    <edge source="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.kupony_tagi" target="3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.tagi" relationship="REFERENCES">
+      <point x="-30.75" y="-39.0" />
+      <point x="349.3448275862069" y="370.0" />
+      <point x="283.0" y="370.0" />
+      <point x="0.0" y="94.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.8372310570626754" showDependencies="false" x="805.5" y="524.5" />
+  <SelectedNodes>
+    <node>3ac0f107-ddc9-4a75-bca8-61dfc4a697cf.TABLE:d7fb2plf2a3uq.public.ttt</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Comments</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+
