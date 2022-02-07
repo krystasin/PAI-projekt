@@ -1,0 +1,98 @@
+.a-dodaj-mecz{
+    padding: 10px;
+    background-color: #ccc;
+}
+.a-dodaj-mecz-row{
+
+    margin: 10px 0 0 0;
+}
+.a-mecz-label{
+    display: inline-block;
+    width: 120px;
+}
+.a-dodaj-mecz-row > select{
+    width: 150px;
+}
+.dodaj-mecz{
+    width: 130px;
+    padding: 2px 0;
+}
+.dodaj-nowy-mecz{
+    margin: 20px;
+}
+
+
+.a-mecz:nth-child(odd){background-color:#ddd}
+.a-mecz:nth-child(even){background-color:#ccc}
+
+
+
+
+
+
+
+
+.wszystki-mecze{
+    margin: 30px 0 60px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.a-mecz{
+    display: flex;
+    flex-direction: row;
+    padding: 2px 8px;
+}
+.a-team{
+    width: 190px;
+}
+.a-mecz-id{
+    width:40px;
+}
+.a-mecz-gospodarz{
+text-align: right;
+}
+.a-mecz-gosc{
+
+}
+.a-mecz-pausa{
+text-align: center;
+    width: 10px;
+}
+.a-mecz-data{
+    color: #777;
+    text-align: right;
+    width: 170px;
+    font-size: 15px;
+}
+.a-mecz-liga{
+
+    width: 130px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

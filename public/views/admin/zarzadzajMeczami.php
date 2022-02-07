@@ -3,83 +3,103 @@
 
 <div class='container'>
 
-    <script type='text/javascript' src='/public/assets/js/zzzzzzzzzzzzz.js' defer></script>
+    <script type='text/javascript' src='/public/assets/js/mecze.js' defer></script>
 
 
     <?php require_once __DIR__ . '/../static/navigation_a.php'; ?>
     <div class='admin-content'>
 
 
-        <div class='message-container' style="display: none">
-            zarzadzajZakladami_admin
-        </div>
-        <div class='zaklady-filter'>
-            Przefiltruj zaklady: <input type="text" name="zaklady-search" class="zaklady-search">
-        </div>
-        <div class='dodaj-nowy-zaklad-btn'>
+        <div class='dodaj-nowy-mecz'>
             DODAJ NOWY MECZ
         </div>
 
 
-        <form class='nowy-zaklad'>
+        <div class='a-dodaj-mecz'>
             <form action="dodajNowyMecz" method="post">
-                <div class='row'>
+                <div class="a-dodaj-mecz-row">
 
-                    <label for="druzyna_1">gospodarz</label>
-                    <input type='text' name='druzyna_1' class=''>
-                    <select>
-                        <option value="t1">t1</option>
-                        <option value="t2">t2</option>
-
-                    </select>
-                </div>
-                <div class='row'>
-
-                    <label for="druzyna_2">gosc</label>
-                    <input type='text' name='druzyna_2' class=''>
-                    <select>
-                        <option value="t1">t1</option>
-                        <option value="t2">t2</option>
+                    <label for="druzyna_1" class='a-mecz-label'>gospodarz</label>
+                    <select name="gospodarz">
+                        <?php
+                        foreach ($metaData['druzyny'] as $d) { ?>
+                            <option value='<?= $d->id ?>'><?= $d->nazwa ?></option>
+                        <?php } ?>
 
                     </select>
-                </div>
-                <div class='row'>
 
-                    <label for="druzyna_2">liga</label>
-                    <input type='text' name='liga' class=''>
-                    <select>
-                        <option value="t1">l1</option>
-                        <option value="t2">l2</option>
+                    <input type='text' name='druzyna_1' class='a-dodaj-mecz-filtr-inp'>
+                </div>
+                <div class='a-dodaj-mecz-row'>
+
+                    <label for="druzyna_2" class='a-mecz-label'>gosc</label>
+                    <select name="gosc">
+                        <?php
+                        foreach ($metaData['druzyny'] as $d) { ?>
+                            <option value='<?= $d->id ?>'><?= $d->nazwa ?></option>
+                        <?php } ?>
 
                     </select>
+                    <input type='text' name='druzyna_2' class='a-dodaj-mecz-filtr-inp'>
+                </div>
+                <div class='a-dodaj-mecz-row'>
+
+                    <label for="liga" class='a-mecz-label'>liga</label>
+                    <select class="a-dodaj-mecz-select" name="liga">
+
+                        <?php
+                        foreach ($metaData['ligi'] as $d) { ?>
+                            <option value='<?= $d->id ?>'><?= $d->nazwa ?></option>
+                        <?php } ?>
+                    </select>
+                    <input type='text'  class='a-dodaj-mecz-filtr-inp'>
                 </div>
 
-                <div class='row'>
+                <div class='a-dodaj-mecz-row'>
 
-                    <label for="druzyna_2">data</label>
-                    <input type='datetime-local' name='data' class=''>
+                    <label for="data" class='a-mecz-label'>data</label>
+                    <input type='datetime-local' name='data' class="a-dodaj-mecz-filtr-inp">
 
+                    <button type='submit' class='dodaj-mecz'>dodaj mecz</button>
                 </div>
 
             </form>
+        </div>
+
+
+
+        <!--       mecze      -->
+        <!--       mecze      -->
+        <!--       mecze      -->
+
+        <div class='wszystki-mecze'>
+            <?php
+            foreach ($mecze as $mecz) { ?>
+                <div class='a-mecz'>
+                    <div class='a-mecz-id a-mecz-col'><?= $mecz['id'] ?></div>
+                    <div class='a-mecz-gospodarz a-mecz-col a-team'><?= $mecz['gospodarz'] ?></div>
+                    <div class='a-mecz-pausa a-mecz-col'>-</div>
+                    <div class='a-mecz-gosc a-mecz-col a-team'><?= $mecz['gosc'] ?></div>
+                    <div class='a-mecz-liga a-mecz-col'><?= $mecz['liga'] ?></div>
+                    <div class='a-mecz-data a-mecz-col'><?= $mecz['data'] ?></div>
+
+                </div>
+            <?php } ?>
+        </div>
 
     </div>
 
 
-    <!--       mecze      -->
-    <!--       mecze      -->
-    <!--       mecze      -->
 
-
-    <div class='wszystki-mecze'>
-
-
-    </div>
 
 
 </div>
 
 <?php require_once __DIR__ . '/../static/footer_a.php'; ?>
+
+
+
+
 
 
 

@@ -35,7 +35,7 @@ function dodajNowyZakladDoForm() {
     x.querySelector(".rodzaj-zaklad-select").addEventListener("change", function () {
         const sel2 = x.querySelector(".wartosc-zaklad-select");
         const val = sel2.options;
-        sel2.value = "";
+
     })
 
 
@@ -47,6 +47,8 @@ function dodajNowyZakladDoForm() {
         for (var i = 0, len = this.options.length; i < len; i++) {
             this.options[i].hidden = this.options[i].value.split("_")[1] != wybrany_zaklad.value;
         }
+
+
     })
 
     x.querySelector('.nz-mecz-filtr').addEventListener("input", function () {
@@ -64,6 +66,9 @@ function dodajNowyZakladDoForm() {
             sel.options[i].hidden = !czyZawiera;
             sel.options[i].disabled = !czyZawiera;
         }
+        for (var i = 0, len = sel.options.length; i < len; i++)
+            if(! sel.options[i].hidden )
+                return sel.selectedIndex = i;
 
 
     })

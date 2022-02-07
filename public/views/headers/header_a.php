@@ -6,7 +6,7 @@
 
     <?php
     if (isset($title))
-        echo  '<title>' . $title . '</title>';
+        echo '<title>' . $title . '</title>';
     else
         echo '<title>Kszton statistics</title>';
     ?>
@@ -15,7 +15,13 @@
     <link rel="stylesheet" href="public/css/headerStyle.css" type="text/css">
     <link rel="stylesheet" href="public/css/admin.css" type="text/css">
     <link rel="stylesheet" href="public/css/zaklady_a.css" type="text/css">
+    <link rel="stylesheet" href="public/css/mecze.css" type="text/css">
 
+    <?php
+    if (isset($styles))
+        foreach ($styles as $s)
+            echo "<link rel=\"stylesheet\" href=\"public/css/" . $s . ".css\" type=\"text/css\">";
+    ?>
 
 </head>
 <body>

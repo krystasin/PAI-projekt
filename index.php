@@ -36,6 +36,7 @@ require 'Routing.php';
     Routing::post('a_zmienWartoscZakladu', 'AdminController');
     Routing::post('a_zmienRodzajZakladu', 'AdminController');
     Routing::post('stworzZaklad', 'AdminController');
+    Routing::post('dodajNowyMecz', 'AdminController');
 
 
 

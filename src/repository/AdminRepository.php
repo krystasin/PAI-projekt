@@ -3,6 +3,8 @@
 require_once 'Repository.php';
 require_once __DIR__ . '/../models/ZakladRodzaj.php';
 require_once __DIR__ . '/../models/ZakladWartosc.php';
+require_once __DIR__ . '/../models/Druzyna.php';
+require_once __DIR__ . '/../models/Liga.php';
 
 
 class AdminRepository extends Repository
@@ -57,6 +59,75 @@ class AdminRepository extends Repository
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+
+
+
+
+
+    public function dodajMecz($gospId, $goscId, $ligaId, $data)
+    {
+        $con = $this->database->setConnection();
+        $stmt = $con->prepare("INSERT INTO public.mecze (mecz_id, druzyna_1_id, druzyna_2_id, data_meczu, liga_id)
+            VALUES (DEFAULT, :id1, :id2, :data_m, :idLiga)");
+        $stmt->bindParam(':id1', $gospId, PDO::PARAM_INT);
+        $stmt->bindParam(':id2', $goscId, PDO::PARAM_INT);
+        $stmt->bindParam(':data_m', $data, PDO::PARAM_INT);
+        $stmt->bindParam(':idLiga', $ligaId, PDO::PARAM_INT);
+        $stmt->execute();
+
+    }
+
+
+
+
+
+
+
+    public function getMecze()
+    {
+        $con = $this->database->setConnection();
+        $stmt = $con->prepare('select
+       m.mecz_id as id,
+       d1.druzyna_nazwa as gospodarz,
+       d2.druzyna_nazwa as gosc,
+       l.liga,
+       m.data_meczu as data
+from mecze m
+         JOIN druzyny d1 on m.druzyna_1_id = d1.druzyna_id
+         JOIN druzyny d2 on m.druzyna_2_id = d2.druzyna_id
+         join _ligi l on m.liga_id = l.liga_id
+ORDER BY m.data_meczu DESC');
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+
+    public function getMeczeMetaData()
+    {
+        $ret = array();
+        $ret['druzyny'] = array();
+        $ret['ligi'] = array();
+        $con = $this->database->setConnection();
+        $stmt = $con->prepare('SELECT * FROM druzyny ');
+        $stmt->execute();
+        foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+
+            array_push($ret['druzyny'], new Druzyna($row['druzyna_id'], $row['druzyna_nazwa']));
+        }
+
+        $con = $this->database->setConnection();
+        $stmt = $con->prepare('SELECT * FROM _ligi ');
+        $stmt->execute();
+        foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+
+            array_push($ret['ligi'], new Liga($row['liga_id'], $row['liga']));
+        }
+
+        return $ret;
+    }
+
+
     public function stworzZaklad($rodzaj, $wartosci)
     {
 
@@ -90,7 +161,7 @@ class AdminRepository extends Repository
             array_push($wart, ['id' => $i, 'wartosc' => $w]);
             $i++;
         }
-        return ['status' => true, 'id' => $id, 'rodzaj' => $rodzaj , 'wartosci' => $wart];
+        return ['status' => true, 'id' => $id, 'rodzaj' => $rodzaj, 'wartosci' => $wart];
 
     }
 

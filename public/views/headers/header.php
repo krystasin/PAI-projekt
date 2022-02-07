@@ -9,9 +9,9 @@
         print  "<title>" . $title . "</title>";
     } else echo "<title>Kszton statistics</title>";
 
-/*    if (isset($styles))
+    if (isset($styles))
         foreach ($styles as $s)
-            echo "<link rel=\"stylesheet\" href=\"public/css/" . $s . ".css\" type=\"text/css\">";*/
+            echo "<link rel=\"stylesheet\" href=\"public/css/" . $s . ".css\" type=\"text/css\">";
 
 
     ?>
