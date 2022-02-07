@@ -32,11 +32,11 @@ class UserRepository extends Repository
 
     public function getUser( string $login, string $password): ?User
     {
-
+        $pass = md5($password);
         $con = $this->database->setConnection();
         $stmt = $con->prepare('SELECT id FROM public.users WHERE login = :login AND password = :password');
         $stmt->bindParam(':login', $login, PDO::PARAM_STR);
-        $stmt->bindParam(':password', $password, PDO::PARAM_STR);
+        $stmt->bindParam(':password', $pass, PDO::PARAM_STR);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
@@ -49,15 +49,20 @@ class UserRepository extends Repository
 
     }
 
+
+
     public function register($user){
         $con = $this->database->setConnection();
 
-        $stmt = $con->prepare("INSERT INTO users VALUES (nextval('users_id_seq'), :login, :password)");
+        $stmt = $con->prepare("INSERT INTO users VALUES (DEFAULT, :login, :password) returning id");
         $stmt->bindParam(':login', $user->getLogin(), PDO::PARAM_STR);
         $stmt->bindParam(':password', $user->getPassword(), PDO::PARAM_STR);
         $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $stmt = $con->prepare("INSERT INTO usersdata VALUES (nextval('usersdata_id_seq'), :username, :email, 2, now())");
+        $stmt = $con->prepare("INSERT INTO usersdata VALUES ( :id , :username, :email, 2, now())");
+        $stmt->bindParam(':id', $result['id'], PDO::PARAM_INT);
+        $stmt->bindParam(':username', $user->getUsername(), PDO::PARAM_STR);
         $stmt->bindParam(':username', $user->getUsername(), PDO::PARAM_STR);
         $stmt->bindParam(':email', $user->getEmail(), PDO::PARAM_STR);
         $stmt->execute();
