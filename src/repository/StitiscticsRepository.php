@@ -11,7 +11,8 @@ class StitiscticsRepository extends Repository
     public function getStandardStatistics($user)
     {
         $con = $this->database->setConnection();
-        $stmt = $con->prepare("SELECT * FROM statystyka_poprzez_rodzaj_zakladu( :user )");
+        $stmt = $con->prepare("
+select *, (100 * z.wygrane / z.razem::float )as procent  from statystyka_poprzez_rodzaj_zakladu(:user) z order BY procent DESC;");
         $stmt->bindValue(':user', $user, PDO::PARAM_STR);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -24,7 +25,8 @@ class StitiscticsRepository extends Repository
                 $row['razem'],
                 $row['wygrane'],
                 $row['przegrane'],
-                $row['nierozstrzygniete']
+                $row['nierozstrzygniete'],
+                $row['procent']
             ));
         }
 

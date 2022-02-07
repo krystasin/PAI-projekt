@@ -89,16 +89,22 @@
     width: 50px;
     margin: 0 auto;
 }
+.stat-zaklad:nth-child(even) {background: #e0e0e0}
+.stat-zaklad:nth-child(odd) {background: #eee}
+
 
 .stat-zaklad {
     display: flex;
     flex-direction: row;
+
+
 }
 .stat-zaklad > *{
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-end;
+    opacity: 1 !important;
 }
 .stat-id {
     width: 5%;

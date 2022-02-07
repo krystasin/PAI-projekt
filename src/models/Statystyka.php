@@ -9,17 +9,10 @@ class Statystyka
     public int $wygrane;
     public int $przegrane;
     public int $nierozstrzygniete;
+    public float $procent;
 
-    /**
-     * @param int $userId
-     * @param int $id
-     * @param string $nazwa
-     * @param int $wszystkie
-     * @param int $wygrane
-     * @param int $przegrane
-     * @param int $nierozstrzygniete
-     */
-    public function __construct(int $userId, int $id, string $nazwa, int $wszystkie, int $wygrane, int $przegrane, int $nierozstrzygniete)
+
+    public function __construct(int $userId, int $id, string $nazwa, int $wszystkie, int $wygrane, int $przegrane, int $nierozstrzygniete, string $procent)
     {
         $this->userId = $userId;
         $this->id = $id;
@@ -28,6 +21,7 @@ class Statystyka
         $this->wygrane = $wygrane;
         $this->przegrane = $przegrane;
         $this->nierozstrzygniete = $nierozstrzygniete;
+        $this->procent = floatval($procent);
     }
 
 

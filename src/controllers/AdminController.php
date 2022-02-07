@@ -21,6 +21,15 @@ class AdminController extends AppController
         $this->render('admin/zarzadzajZakladami', ['title' => 'Strona główna','zaklady' => $zaklady ]);
     }
 
+    public function zarzadzajMeczami()
+    {
+        $this->render('admin/zarzadzajMeczami', ['title' => 'Strona główna' ]);
+    }
+
+
+
+
+
     public function a_zmienWartoscZakladu()
     {
         $contentType = isset($_SERVER['CONTENT_TYPE']) ? trim($_SERVER['CONTENT_TYPE']) : '';

@@ -32,6 +32,7 @@ require 'Routing.php';
     Routing::post('isLoginAvailable', 'SecurityController');
 
     Routing::post('zarzadzajZakladami', 'AdminController');
+    Routing::post('zarzadzajMeczami', 'AdminController');
     Routing::post('a_zmienWartoscZakladu', 'AdminController');
     Routing::post('a_zmienRodzajZakladu', 'AdminController');
     Routing::post('stworzZaklad', 'AdminController');

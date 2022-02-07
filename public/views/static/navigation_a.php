@@ -3,6 +3,7 @@
     <nav class='navbar'>
         <ul class='navUl'>
             <li class='navLi'><a href='zarzadzajZakladami'> zarzadzaj zakladami </a></li>
+            <li class='navLi'><a href='zarzadzajMeczami'> zarzadzaj meczami </a></li>
 
         </ul>
     </nav>

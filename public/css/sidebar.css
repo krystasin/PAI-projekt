@@ -5,7 +5,7 @@
 }
 .sidebar-content{    display: flex;
     flex-direction: column;
-    width: 220px;
+
     padding: 0 20px 20px 20px;
     margin:20px 0 0 20px;
     border-right: 1px solid #aaa;
@@ -42,3 +42,51 @@
     margin-right: 5px;
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.sid-bar-2 {
+    padding: 0 20px 20px 0px;
+    margin:20px 0 0 20px;
+    width: 260px;
+}
+
+.sid-bar-2 > *{
+    margin-top: 9px;
+}
+
+
+.stat-filtr-row-head{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between
+}
+.stat-filtr-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between
+}
+
+.stat-filtr-nmbr{
+    width: 70px;
+
+}
+
+
+

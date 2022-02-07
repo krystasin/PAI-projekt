@@ -4,8 +4,16 @@
 [...document.querySelectorAll('.statystyka')].forEach(pobierzStaty);
 
 function zwinRozwin() {
-    const body = this.parentNode.parentNode.parentNode.querySelector('.statystyka-body');
+    const parent = this.parentNode.parentNode.parentNode;
+
+    const opisy = parent.querySelector('.stat-opisy');
+    const body = parent.querySelector('.statystyka-body');
     body.hidden = !body.hidden;
+    if(body.hidden)opisy.style.display ='none';
+    else opisy.style.display ='flex';
+
+
+
     this.style.backgroundImage = body.hidden ? 'url(/src/img/chevron-circle-down-solid.svg)' : 'url(/src/img/chevron-circle-up-solid.svg)';
 
 }
@@ -17,9 +25,9 @@ function pobierzStaty(el){
         'userId': el.getAttribute('userId'),
         'id': el.getAttribute('id'),
     }
-    console.log(data);
+   // console.log(data);
     const dataJson = JSON.stringify(data);
-    console.log(dataJson);
+    //console.log(dataJson);
 
     fetch("/pobierzWybraneZaklady", {
         method: "POST",
@@ -44,7 +52,7 @@ function printBody(el, res){
 
 function createZakladRow(row){
     const t = document.querySelector('#stat-zaklad-template-row').content.children[0].cloneNode(true);
-
+    t.style.backgroundColor = 'fade(#FFFFFF, 50%);'
     t.querySelector('.stat-id').innerHTML = "#"+row.id;
     t.querySelector('.stat-id').classList.add('stat-' + row.status);
     t.querySelector('.stat-data').innerHTML = row.data.slice(0, -3);

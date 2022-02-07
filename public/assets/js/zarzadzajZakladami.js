@@ -45,7 +45,8 @@ document.querySelector('.save-nowy-zaklad').addEventListener('click', function (
         .then(czysc)
 
 });
-function czysc(){
+
+function czysc() {
     document.querySelector('.nz-nazwa').value = "";
     [...document.querySelectorAll('.nz-zw-row')].forEach(el => el.remove());
 }
@@ -70,7 +71,7 @@ function crateZaklad(res) {
     document.querySelector('.wszystki-zaklady').append(d);
 }
 
-function crateWartosc( w) {
+function crateWartosc(w) {
     const d = document.querySelector('#template-single-wartosc').content.children[0].cloneNode(true);
     d.setAttribute("id", w.id)
     d.querySelector('.zaklad-wartosc-id').setAttribute("id", w.id);
@@ -81,18 +82,6 @@ function crateWartosc( w) {
 
     return d;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 document.querySelector('.zaklady-search').addEventListener("input", filtuj);
@@ -116,11 +105,19 @@ function filtujZaklad(zaklad) {
 function includesText(zaklad) {
 
     let searched = document.querySelector('.zaklady-search').value.split(" ");
-    let czyZawiera = true;
+    let czyZawiera = false;
+
     searched.forEach(q => {
-        if (!zaklad.innerText.toLowerCase().includes(q.toLowerCase())) czyZawiera = false;
+        const inputy = zaklad.querySelectorAll('input');
+
+        inputy.forEach(inp => {
+
+            if (inp.value.toLowerCase().includes(q.toLowerCase())) {
+                czyZawiera = true;
+            }
+        })
+
     })
-    console.log(zaklad.querySelector('.zaklad-id').innerText, czyZawiera);
     return czyZawiera;
 }
 
